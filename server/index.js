@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const express = require('express');
 const { Join, Disconnect } = require('./session/session')
-const { Drawing } = require('./data/drawing')
+const { Drawing, Undo } = require('./data/drawing')
 
 const PORT = process.env.PORT || 5000;
 
@@ -30,6 +30,8 @@ io.on('connection', (socket) => {
     Join(socket, io);
 
     Drawing(socket);
+
+    Undo(socket, io);
 
     Disconnect(socket, io);
 });

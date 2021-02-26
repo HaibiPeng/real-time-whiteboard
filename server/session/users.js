@@ -1,6 +1,8 @@
 const users = [];
 
-const getUser = (id) => users.find((user) => user.id === id);
+const getUser = (id) => {
+    return users.filter((user) => user.id === id);
+};
 
 const addUser = ({ id, username, room}) => {
     username = username.trim().toLowerCase();

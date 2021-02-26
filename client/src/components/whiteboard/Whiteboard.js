@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
+import { FaUndoAlt, FaEraser } from 'react-icons/fa';
 import queryString from 'query-string';
 import io from 'socket.io-client';
 import Drawing from './drawing/drawing'
@@ -37,12 +38,10 @@ const Whiteboard = ({ location }) => {
     useEffect(() => {
         socket.on('message', (message) => {
             setMessage(message);
-            console.log(message);
         });
 
         socket.on("roomData", ({ users }) => {
             setUsers(users);
-            console.log(users);
         });
     }, [message, users]);
 
@@ -78,6 +77,10 @@ const Whiteboard = ({ location }) => {
                 <div className="color green"></div>
                 <div className="color blue"></div>
                 <div className="color yellow"></div>
+                <div id='erase'>
+                    <FaEraser size={35} />
+                </div>
+                <div id="undo"><FaUndoAlt size={30} /></div>
             </div>
 
             <script src="/socket.io/socket.io.js"></script>
