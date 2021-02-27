@@ -8,7 +8,6 @@
 /* Store edition of all users separately.
  *
  */
-const userId = null;
 const localEdition = {
     lines: null,     // a list of objects
     images: null,
@@ -23,50 +22,112 @@ const editionOfClientX = {
 
 const othersEditions = [];   // an array of editions composition, each composition is of the above form
 
+let USERID = null;
+const setUserid = (userId) => {
+    USERID = userId;
+};
+
+const getUserid = () => {
+    return USERID;
+};
+
 /* The following functions will be invoked by GUI.
- * Interfaces exposed to interaction layer (layer3).
  * 'D' is the abbr of Down, which means that the data flow is from the higher layer to the lower layer.
  */
 
-import { getMsgL2Template } from "../../../../PDU/layer2/msgDefL2.js";
-import * as snLayer from "../layer1/sessionLayer.js";
-import * as ntLayer from "../layer3/interactionLayer.js";
+const { getMsgL2Template, TYPESL2 } = require("../../../../PDU/layer2/msgDefL2.js");
+const assert = require("assert");
 
-const drawLineDL2 = (msgL3) => {
-    const msgL2 = getMsgL2Template();
+const drawLineDL2 = (x1, y1, x2, y2) => {
+    // can only draw when the userid is set, say, connect to the server
+    assert(USERID != null);
+    const msgL2 = getMsgL2Template(TYPESL2.DRAW);
     // fill msgL2
-    // handle conflicts
-    send(msgL2);
+    msgL2.head.userid = USERID;
+    msgL2.payload.loc.x1 = x1;
+    msgL2.payload.loc.x2 = x2;
+    msgL2.payload.loc.y1 = y1;
+    msgL2.payload.loc.y2 = y2;
+    // TODO handle conflicts
+    sendDL2(msgL2);
 };
 
-const addStickyNoteDL2 = (msgL1) => {};
+const addStickyNoteDL2 = (x, y, w, h, text) => {
+    const msgL2 = getMsgL2Template(TYPESL2.STICKYNOTE);
+    msgL2.head.userid = USERID;
+    msgL2.payload.loc.x = x;
+    msgL2.payload.loc.y = y;
+    msgL2.payload.loc.w = w;
+    msgL2.payload.loc.h = h;
+    msgL2.payload.text = text;
+    sendDL2(msgL2);
+};
 
-const addImageDL2 = (msgL1) => {};
+const addImageDL2 = (x, y, w, h, gray, bytes) => {
+    const msgL2 = getMsgL2Template(TYPESL2.ADDIMAGE);
+    msgL2.head.userid = USERID;
+    msgL2.payload.loc.x = x;
+    msgL2.payload.loc.y = y;
+    msgL2.payload.loc.w = w;
+    msgL2.payload.loc.h = h;
+    msgL2.payload.gray = gray;
+    msgL2.payload.bytes = bytes;
+    sendDL2(msgL2);
+};
 
 
-/* The following functions will be invoked by the operation manage layer (layer2).
- * Interfaces exposed to layer1.
+/* The following functions invoke functions from GUI to display editions.
  * 'U' is the abbr of Up, which means that the data flow is from the lower layer to the higher layer.
  */
+const { drawLineG, addStickNoteG, addImageG } = require("../../GUI/gui.js")
 const drawLineUL2 = (msgL2) => {
-    // store edition
-    // handle (possible) conflicts
-    const msgL3 = null;
-    // extract msgL3 from msgL2
-    ntLayer.drawLineUL3(msgL3);
+    // TODO: store edition
+    // TODO: handle (possible) conflicts
+    // TODO: invoke functions form GUI to display the edition
+    drawLineG(
+        msgL2.payload.loc.x1,
+        msgL2.payload.loc.y1,
+        msgL2.payload.loc.x2,
+        msgL2.payload.loc.y2,
+        msgL2.payload.color,
+        );
 };
 
-const addStickyNoteUL2 = (msgL2) => {};
+const addStickyNoteUL2 = (msgL2) => {
+    // TODO: store the edition
+    // TODO: invoke functions form GUI to display the edition
+    addStickNoteG(
+        msgL2.payload.loc.x,
+        msgL2.payload.loc.y,
+        msgL2.payload.loc.w,
+        msgL2.payload.loc.h,
+        msgL2.payload.text,
+    );
+};
 
-const addImageUL2 = (msgL2) => {};
+const addImageUL2 = (msgL2) => {
+    // TODO: store the edition
+    // TODO: invoke functions form GUI to display the edition
+    addImageG(
+        msgL2.payload.loc.x,
+        msgL2.payload.loc.y,
+        msgL2.payload.loc.w,
+        msgL2.payload.loc.h,
+        msgL2.payload.gray,
+        msgL2.payload.bytes,
+    );
+};
+
+// TODO: other edition-related functions
 
 /*
  * The only entrance for sending data out.
  * Will be invoked by any functions that intend to send message.
  * Will invoke the 'send' function of the session layer (layer1).
  */
-const send = (msgL2) => {
-    snLayer.sendDL1(msgL2)
+var { sendDL1 } = require("../layer1/sessionLayerClient.js");
+const sendDL2 = (msgL2) => {
+    sendDL1(msgL2);
 };
 
 /*
@@ -74,12 +135,26 @@ const send = (msgL2) => {
  * Invoke function like drawLineUL2, addStickyNoteUL2, etc according to different operation parsed from
   the message.
  */
-const recv = (msgL2) => {
+const recvUL2 = (msgL2) => {
     // invoke drawLineUL2, addStickyNoteUL2, etc. according to edition type
+    switch (msgL2.head.type) {
+        case TYPESL2.DRAW:
+            drawLineUL2(msgL2);
+            break;
+        case TYPESL2.STICKYNOTE:
+            addStickyNoteUL2(msgL2);
+            break;
+        case TYPESL2.ADDIMAGE:
+            addImageUL2(msgL2);
+            break;
+        default:
+            console.log("Invalid message type!(L2, client side)");
+    }
 };
 
-export {
+module.exports = {
+    setUserid, getUserid,
     drawLineDL2, addImageDL2, addStickyNoteDL2,
     drawLineUL2, addImageUL2, addStickyNoteUL2,
-    send, recv,
+    recvUL2,
 };

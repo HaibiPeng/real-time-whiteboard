@@ -8,21 +8,21 @@ const disconnectG = () => {};
 /*
  * edition operations.
  */
-const drawLineG = () => {};
+const drawLineG = (x1, y1, x2, y2, color) => {};
 
-const addStickNoteG = () => {};
+const addStickNoteG = (x, y, w, h, text) => {};
 
-const addImageG = () => {};
+const addImageG = (x, y, w, h, gray, bytes) => {};
 
 
 /*
- * Action listeners/handlers are also implemented here.
+ * Action listeners/handlers can also be implemented here.
  * OnMouseDown
  * OnMouseUp
  * etc.
  */
 
-export {
+module.exports = {
     connectG, disconnectG,
     drawLineG, addImageG, addStickNoteG,
 }
