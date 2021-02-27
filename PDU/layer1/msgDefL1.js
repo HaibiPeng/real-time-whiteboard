@@ -1,7 +1,7 @@
 // Message definition of layer 1, say, the session layer
 
 // enumeration of 'type'
-const TYPESL1 = {
+const TYPES_L1 = {
     CONNECT: 'connect',
     DISCONNECT: 'disconnect',
     EDIT: 'edit',
@@ -44,17 +44,17 @@ const getMsgL1TemplateEdit = () => {
     return msgL1;
 };
 
-const getMsgL1Template = (type=TYPESL1.CONNECT) => {
-    if (type === TYPESL1.CONNECT) {
+const getMsgL1Template = (type=TYPES_L1.CONNECT) => {
+    if (type === TYPES_L1.CONNECT) {
         return getMsgL1TemplateConnect();
-    } else if (type === TYPESL1.DISCONNECT) {
+    } else if (type === TYPES_L1.DISCONNECT) {
         return getMsgL1TemplateDisconnect();
-    } else if (type === TYPESL1.EDIT) {
+    } else if (type === TYPES_L1.EDIT) {
         return getMsgL1TemplateEdit();
     }
 };
 
 module.exports = {
-    TYPESL1,
+    TYPES_L1,
     getMsgL1Template,
 };

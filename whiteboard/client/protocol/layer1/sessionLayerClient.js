@@ -1,7 +1,8 @@
 // Session layer (layer1)
 
-const { recvUL2, setUserid } = require("../layer2/operationManageLayer.js");
-const { getMsgL1Template, TYPESL1 } = require("../../../../PDU/layer1/msgDefL1.js");
+const { recvUL2 } = require("../layer2/operationTransferLayerUpstream.js");
+const { setUserid } = require("../layer2/stateManageLayer.js");
+const { getMsgL1Template, TYPES_L1 } = require("../../../../PDU/layer1/msgDefL1.js");
 
 let webSocket = null;        // web socket is implemented with Singleton Pattern
 
@@ -26,14 +27,14 @@ const getWebSocket = () => {
  * Password should be a string.
  */
 const connectDL1 = (pwd) => {
-    const msgL1 = getMsgL1Template(TYPESL1.CONNECT);
+    const msgL1 = getMsgL1Template(TYPES_L1.CONNECT);
     msgL1.head.type = 'connect';
     msgL1.head.pwd = pwd.toString();
     getWebSocket().send(msgL1);
 };
 
 const disconnectDL1 = () => {
-    const msgL1 = getMsgL1Template(TYPESL1.DISCONNECT);
+    const msgL1 = getMsgL1Template(TYPES_L1.DISCONNECT);
     getWebSocket().send(msgL1);
 };
 
@@ -42,7 +43,7 @@ const disconnectDL1 = () => {
  * Invoked by functions from operation manage layer (layer2)
  */
 const sendDL1 = (msgL2) => {
-    const msgL1 = getMsgL1Template(TYPESL1.EDIT);
+    const msgL1 = getMsgL1Template(TYPES_L1.EDIT);
     msgL1.payload = msgL2;
     getWebSocket().send(msgL1);
 };
@@ -53,7 +54,7 @@ const sendDL1 = (msgL2) => {
  */
 const recvUL1 = (msgL1) => {
     switch (msgL1.head.type) {
-        case TYPESL1.CONNECT:
+        case TYPES_L1.CONNECT:
             if (msgL1.head.userid != null) {
                 // connection successes!
                 setUserid(msgL1.head.userid);
@@ -61,10 +62,10 @@ const recvUL1 = (msgL1) => {
                 console.log(msgL1.head.description);
             }
             break;
-        case TYPESL1.DISCONNECT:
+        case TYPES_L1.DISCONNECT:
             console.log(msgL1.head.description);
             break;
-        case TYPESL1.EDIT:
+        case TYPES_L1.EDIT:
             recvUL2(msgL1.payload);
             break;
         default:
@@ -74,5 +75,5 @@ const recvUL1 = (msgL1) => {
 
 
 module.exports = {
-    connectDL1, disconnectDL1, sendDL1, recvUL1,
+    connectDL1, disconnectDL1, sendDL1,
 };

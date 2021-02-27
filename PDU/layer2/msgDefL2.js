@@ -2,7 +2,7 @@
 // PDUs are defined by functions
 
 // enumeration of 'type'
-const TYPESL2 = {
+const TYPES_L2 = {
     DRAW: 'draw',
     STICKYNOTE: 'stickyNote',
     ADDIMAGE: 'addImage',
@@ -77,6 +77,6 @@ const getMsgL2Template = (type='draw') => {
 };
 
 module.exports = {
-    TYPESL2,
+    TYPES_L2,
     getMsgL2Template
 };

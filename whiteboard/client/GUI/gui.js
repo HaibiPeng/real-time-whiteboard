@@ -8,11 +8,11 @@ const disconnectG = () => {};
 /*
  * edition operations.
  */
-const drawLineG = (x1, y1, x2, y2, color) => {};
+const drawLineG = (msgL2) => {};
 
-const addStickNoteG = (x, y, w, h, text) => {};
+const addStickNoteG = (msgL2) => {};
 
-const addImageG = (x, y, w, h, gray, bytes) => {};
+const addImageG = (msgL2) => {};
 
 
 /*

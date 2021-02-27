@@ -2,7 +2,7 @@
  * session layer's (layer1) implementation on SERVER side
  */
 
-const { getMsgL1Template, TYPESL1 } = require("../../../../PDU/layer1/msgDefL1.js");
+const { getMsgL1Template, TYPES_L1 } = require("../../../../PDU/layer1/msgDefL1.js");
 
 let pwd = null;
 const setPwd = (newpwd) => {
@@ -20,10 +20,10 @@ let nextUserId = 0;
 // the whiteboard client connection handler, not web socket connection
 const connectHandler = (socket, msgL1) => {
     if (currNumClients >= MAX_NUM_OF_CLIENTS) {
-        const msgL1 = getMsgL1Template(TYPESL1.CONNECT);
+        const msgL1 = getMsgL1Template(TYPES_L1.CONNECT);
         msgL1.head.description = "The current number of clients has reached maximum! Please try again later.";
         socket.send(msgL1);
-        const msgL1Disconn = getMsgL1Template(TYPESL1.DISCONNECT);
+        const msgL1Disconn = getMsgL1Template(TYPES_L1.DISCONNECT);
         msgL1Disconn.head.description = "This connection will be closed soon!";
         socket.send(msgL1Disconn);
         socket.disconnect(true);
@@ -34,7 +34,7 @@ const connectHandler = (socket, msgL1) => {
         console.log("Authenticated!");
         socket.join('group');
 
-        const msgL1 = getMsgL1Template(TYPESL1.CONNECT);
+        const msgL1 = getMsgL1Template(TYPES_L1.CONNECT);
         msgL1.head.userid = nextUserId;
         nextUserId += 1;
         currNumClients += 1;
@@ -44,7 +44,7 @@ const connectHandler = (socket, msgL1) => {
             currNumClients -= 1;
         });
     } else {
-        const msgL1 = getMsgL1Template(TYPESL1.CONNECT);
+        const msgL1 = getMsgL1Template(TYPES_L1.CONNECT);
         msgL1.head.description = 'Password is incorrect!';
         socket.send(msgL1);
     }
@@ -53,7 +53,7 @@ const connectHandler = (socket, msgL1) => {
 // the whiteboard client disconnection handler, not web socket disconnection
 const disconnHandler = (socket, msgL1) => {
     socket.authenticated = false;
-    const msgL1Disconn = getMsgL1Template(TYPESL1.DISCONNECT);
+    const msgL1Disconn = getMsgL1Template(TYPES_L1.DISCONNECT);
     msgL1Disconn.head.description = "This connection will be closed soon!";
     socket.send(msgL1Disconn);
     socket.disconnect(true);
@@ -75,13 +75,13 @@ const recvMsg = (socket) => {
     socket.on('message', (msgL1) => {
         console.log(JSON.stringify(msgL1));
         switch (msgL1.head.type) {
-            case TYPESL1.CONNECT:
+            case TYPES_L1.CONNECT:
                 connectHandler(socket, msgL1);
                 break;
-            case TYPESL1.DISCONNECT:
+            case TYPES_L1.DISCONNECT:
                 disconnHandler(socket, msgL1);
                 break;
-            case TYPESL1.EDIT:
+            case TYPES_L1.EDIT:
                 editionHandler(socket, msgL1);
                 break;
             default:
