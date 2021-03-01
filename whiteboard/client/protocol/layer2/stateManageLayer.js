@@ -14,11 +14,13 @@ const getUserid = () => {
 };
 
 // TODO: functions to store different editions
-let drawLines = [];
+let drawLines = []; // [userid2: [], userid2: []]
 let stickNotes = [];
 let images = [];
 
-const storeDrawLinesL2 = (msgL2) => {};
+const storeDrawLinesL2 = (msgL2) => {
+    // TODO, STEP 1
+};
 
 const storeAddStickyNotesL2 = (msgL2) => {};
 

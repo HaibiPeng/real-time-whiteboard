@@ -66,12 +66,12 @@ const getMsgL2TemplateAddImage = () => {
     return msgL2;
 };
 
-const getMsgL2Template = (type='draw') => {
-    if (type === 'draw') {
+const getMsgL2Template = (type=TYPES_L2.DRAW) => {
+    if (type === TYPES_L2.DRAW) {
         return getMsgL2TemplateDraw();
-    } else if (type === 'stickyNote') {
+    } else if (type === TYPES_L2.STICKYNOTE) {
         return getMsgL2TemplateStickyNote();
-    } else if (type === 'addImage') {
+    } else if (type === TYPES_L2.ADDIMAGE) {
         return getMsgL2TemplateAddImage();
     }
 };
