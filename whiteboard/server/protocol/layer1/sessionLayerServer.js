@@ -46,7 +46,7 @@ const connectHandler = (socket, msgL1) => {
     } else {
         const msgL1 = getMsgL1Template(TYPES_L1.CONNECT);
         msgL1.head.description = 'Password is incorrect!';
-        socket.send(msgL1);
+        socket.emit('wrongpassword', msgL1);
     }
 };
 
