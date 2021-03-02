@@ -9,7 +9,7 @@
 /* The following functions invoke functions from GUI to display editions.
  * 'U' is the abbr of Up, which means that the data flow is from the lower layer to the higher layer.
  */
-const { drawLineG, addStickNoteG, addImageG } = require("../../GUI/gui.js");
+const { drawLineG, addStickNoteG, addImageG } = require("../../src/gui.js");
 const { TYPES_L2 } = require("../../../../PDU/layer2/msgDefL2.js");
 const { storeDrawLinesL2, storeAddStickyNotesL2, storeAddImagesL2 } = require("./stateManageLayer.js");
 

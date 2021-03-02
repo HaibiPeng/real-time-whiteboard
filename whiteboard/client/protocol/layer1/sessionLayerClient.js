@@ -60,6 +60,7 @@ const recvUL1 = (msgL1) => {
                 setUserid(msgL1.head.userid);
             } else {
                 console.log(msgL1.head.description);
+                alert(msgL1.head.description);
             }
             break;
         case TYPES_L1.DISCONNECT:
@@ -75,5 +76,5 @@ const recvUL1 = (msgL1) => {
 
 
 module.exports = {
-    connectDL1, disconnectDL1, sendDL1,
+    connectDL1, disconnectDL1, sendDL1, getWebSocket
 };
