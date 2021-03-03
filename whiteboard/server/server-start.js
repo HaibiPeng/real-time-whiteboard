@@ -41,7 +41,7 @@ io.on('connection', (socket) => {
     // snLayer.validate(socket);
     // snLayer.recvMsg(socket);
     init(socket);
-    recvMsg(socket);
+    recvMsg(socket, io);
 });
 
 app.use(cors());

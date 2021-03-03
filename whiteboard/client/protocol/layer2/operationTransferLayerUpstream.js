@@ -12,13 +12,39 @@
 const { drawLineG, addStickNoteG, addImageG } = require("../../src/gui.js");
 const { TYPES_L2 } = require("../../../../PDU/layer2/msgDefL2.js");
 const { storeDrawLinesL2, storeAddStickyNotesL2, storeAddImagesL2 } = require("./stateManageLayer.js");
+const { recvUL1 } = require('../layer1/sessionLayerClient.js');
 
 const drawLineUL2 = (msgL2) => {
     // TODO: store edition
     // TODO: handle (possible) conflicts
     // TODO: invoke functions form GUI to display the edition
-    storeDrawLinesL2(msgL2);
-    drawLineG(msgL2);
+    //storeDrawLinesL2(msgL2);
+    var canvas = document.getElementsByClassName('whiteboard')[0];
+    var context = canvas.getContext('2d');
+    var w = canvas.width;
+    var h = canvas.height;
+    drawLineG(context, msgL2.payload.loc.x0 * w, msgL2.payload.loc.y0 * h, msgL2.payload.loc.x1 * w, msgL2.payload.loc.y1 * h, 
+        msgL2.payload.color, msgL2.payload.id, msgL2.payload.hidden);
+};
+
+const redrawLineUL2 = (msgL2) => {
+    const lineHist = msgL2.payload;
+    console.log(lineHist);
+    var canvas = document.getElementsByClassName('whiteboard')[0];
+    var context = canvas.getContext('2d');
+    context.clearRect(
+        0,
+        0,
+        context.canvas.clientWidth,
+        context.canvas.clientHeight
+    );
+    var w = canvas.width;
+    var h = canvas.height;
+    for (const line of lineHist) {
+        //console.log(line.hidden)
+        drawLineG(context, line.loc.x0 * w, line.loc.y0 * h, line.loc.x1 * w, line.loc.y1 * h,
+            line.color, line.id, line.hidden);
+    };
 };
 
 const addStickyNoteUL2 = (msgL2) => {
@@ -47,6 +73,9 @@ const recvUL2 = (msgL2) => {
     switch (msgL2.head.type) {
         case TYPES_L2.DRAW:
             drawLineUL2(msgL2);
+            break;
+        case TYPES_L2.UNDO:
+            redrawLineUL2(msgL2);
             break;
         case TYPES_L2.STICKYNOTE:
             addStickyNoteUL2(msgL2);

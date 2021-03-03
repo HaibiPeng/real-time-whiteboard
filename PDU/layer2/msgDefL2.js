@@ -4,6 +4,7 @@
 // enumeration of 'type'
 const TYPES_L2 = {
     DRAW: 'draw',
+    UNDO: 'undo',
     STICKYNOTE: 'stickyNote',
     ADDIMAGE: 'addImage',
 };
@@ -16,13 +17,29 @@ const getMsgL2TemplateDraw = () => {
         },
         payload: {
             loc: {
+                x0: null,
+                y0: null,
                 x1: null,
                 y1: null,
-                x2: null,
-                y2: null,
             },
             color: null,
+            hidden: null,
+            id: null
         },
+    };
+    return msgL2;
+};
+
+const getMsgL2TemplateUndo = () => {
+    const msgL2 = {
+        head: {
+            type: 'undo',
+            userid: null,
+        },
+        payload: {
+            id: null,
+            hidden: null
+        }
     };
     return msgL2;
 };
@@ -69,7 +86,9 @@ const getMsgL2TemplateAddImage = () => {
 const getMsgL2Template = (type=TYPES_L2.DRAW) => {
     if (type === TYPES_L2.DRAW) {
         return getMsgL2TemplateDraw();
-    } else if (type === TYPES_L2.STICKYNOTE) {
+    } else if (type === TYPES_L2.UNDO) {
+        return getMsgL2TemplateUndo();
+    }else if (type === TYPES_L2.STICKYNOTE) {
         return getMsgL2TemplateStickyNote();
     } else if (type === TYPES_L2.ADDIMAGE) {
         return getMsgL2TemplateAddImage();

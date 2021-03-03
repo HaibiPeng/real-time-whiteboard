@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
-//import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import './Join.css';
-const { connectDL1 } = require('../../../protocol/layer1/sessionLayerClient.js');
 
-export default function Join(socket) {
+export default function Join() {
     //const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    //const [room, setRoom] = useState('');
-    
-
-    //const WebSocket = getWebSocket();
+    const history = useHistory()
 
     const join = (e) => {
         e.preventDefault();
-        connectDL1(password)
+        history.push(`/whiteboard/?password=${password}`)
         window.location.reload();
     }
 
@@ -30,7 +26,7 @@ export default function Join(socket) {
                 {/* <Link onClick={e => (!username || username === '') ? e.preventDefault() : null} to={`/whiteboard?username=${username}&room=${room}`}>
                     <button className={'button mt-20'} type="submit" >Join</button>
                 </Link> */}
-                <button className={'button mt-20'} type="submit"
+                <button className={'button mt-20'} type="submit" id="btn"
                     onClick={(e) => (!password || password === '') ? e.preventDefault() : join(e)}>Join</button>
             </div>
         </div>
