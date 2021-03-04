@@ -6,21 +6,23 @@ const { getMsgL1Template, TYPES_L1 } = require("../../../../PDU/layer1/msgDefL1.
 const io = require("socket.io-client");
 //const { connected } = require("process");
 
-let webSocket = io("ws://localhost:5000");;        // web socket is implemented with Singleton Pattern
+let webSocket = null;
+
+//let webSocket = io("ws://localhost:5000");       // web socket is implemented with Singleton Pattern
 
 const getWebSocket = () => {
-    /* if (webSocket === null) {
+    if (webSocket === null) {
         const io = require("socket.io-client");
         webSocket = io("ws://localhost:5000");
-        webSocket.on("connect", () => {
+        /* webSocket.on("connect", () => {
             console.log('Connect to server!');
         });
 
         webSocket.on("message", msgL1 => {
             console.log(msgL1);
             recvUL1(msgL1);
-        });
-    } */
+        }); */
+    }
     return webSocket;
 };
 
@@ -35,20 +37,21 @@ const connectDL1 = (pwd, history) => {
     msgL1.head.pwd = pwd.toString();
     const Socket = getWebSocket();
     Socket.send(msgL1);
-    Socket.on("Connect", msgL1 => {
-        if (!recvUL1(msgL1)) {
-            history.push('/');
-        }
-    });
+    // Socket.on("Connect", msgL1 => {
+    //     if (!recvUL1(msgL1)) {
+    //         history.push('/');
+    //     }
+    // });
+    recvUL1(Socket);
     return Socket;
 };
 
 const disconnectDL1 = () => {
     const msgL1 = getMsgL1Template(TYPES_L1.DISCONNECT);
     msgL1.head.type = 'disconnect';
-    const Socket = getWebSocket();
-    Socket.send(msgL1);
-    Socket.off();
+    //const Socket = getWebSocket();
+    webSocket.send(msgL1);
+    webSocket.off();
     window.location.reload();
 };
 
@@ -61,43 +64,50 @@ const sendDL1 = (msgL2) => {
     msgL1.payload = msgL2;
     const Socket = getWebSocket();
     Socket.send(msgL1);
+    recvUL1(Socket);
 };
 
+// const socket = getWebSocket();
 
-webSocket.on('edition', msgL1 => {
-    console.log(msgL1.payload.payload);
-    recvUL1(msgL1);
-});
+// if(socket != null) {
+//     socket.on('edition', msgL1 => {
+//         console.log(msgL1.payload.payload);
+//         recvUL1(msgL1);
+//     });
+
+// }
 
 
 /*
  * Callback function triggered on receiving message.
  * Invoke a function from operation manage layer (layer2)
  */
-const recvUL1 = (msgL1) => {
-    switch (msgL1.head.type) {
-        case TYPES_L1.CONNECT:
-            if (msgL1.head.userid != null) {
-                // connection successes!
-                setUserid(msgL1.head.userid);
-                console.log(msgL1.head.userid);
-                return true;
-            } else {
-                //console.log(msgL1.head.description);
-                alert(msgL1.head.description); 
-                window.location.reload();
-                return false;
-            }
+const recvUL1 = (Socket) => {
+    Socket.on('message', msgL1 => {
+        switch (msgL1.head.type) {
+            case TYPES_L1.CONNECT:
+                if (msgL1.head.userid != null) {
+                    // connection successes!
+                    setUserid(msgL1.head.userid);
+                    console.log(msgL1.head.userid);
+                    return true;
+                } else {
+                    //console.log(msgL1.head.description);
+                    alert(msgL1.head.description);
+                    window.location.reload();
+                    return false;
+                }
             //break;
-        case TYPES_L1.DISCONNECT:
-            console.log(msgL1.head.description);
-            break;
-        case TYPES_L1.EDIT:
-            recvUL2(msgL1.payload);
-            break;
-        default:
-            console.log("Invalid message type! (L1, client side)");
-    }
+            case TYPES_L1.DISCONNECT:
+                console.log(msgL1.head.description);
+                break;
+            case TYPES_L1.EDIT:
+                recvUL2(msgL1.payload);
+                break;
+            default:
+                console.log("Invalid message type! (L1, client side)");
+        }
+    })
 };
 
 

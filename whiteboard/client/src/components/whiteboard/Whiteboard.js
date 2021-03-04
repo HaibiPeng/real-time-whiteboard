@@ -9,11 +9,11 @@ import './whiteboard.css';
 import { connectDL2, disconnectDL2, drawLineDL2 } from '../../../protocol/layer2/operationTransferLayerDownstream.js';
 
 let Socket;
+
 const Whiteboard = ({ location }) => {
     const [users, setUsers] = useState([]);
     const [message, setMessage] = useState([]);
     const history = useHistory();
-    const ENDPOINT = 'localhost:5000';
 
     useEffect(() => {
         const { password } = queryString.parse(location.search);
@@ -23,7 +23,7 @@ const Whiteboard = ({ location }) => {
         return () => {
             disconnectDL2();
         };
-    }, [ENDPOINT, history, location.search]);
+    }, [history, location.search]);
 
     useEffect(() => {
         Socket.on('connection', (message) => {
@@ -42,7 +42,6 @@ const Whiteboard = ({ location }) => {
     window.onhashchange = () => {
         disconnectDL2();
     };
-
 
     return (
         <div>
@@ -75,7 +74,6 @@ const Whiteboard = ({ location }) => {
                 {
                     window.onload = () => {
                         drawLineDL2(Socket);
-                        //drawLineUL2(Socket);
                     }
                 }
             </script>

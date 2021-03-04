@@ -50,15 +50,16 @@ const connectHandler = (socket, io, msgL1) => {
         socket.broadcast.to(user.room).emit('connection', { user: 'admin', text: `${user.id} has joinded` });
 
         io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
-        socket.emit('Connect', msgL1);
+        socket.send(msgL1);
 
         socket.on("Disconnect", (reason) => {
-            currNumClients -= 1;
+            const { user, users } = removeUser(socket.id)
+            currNumClients = users.length;
         });
     } else {
         const msgL1 = getMsgL1Template(TYPES_L1.CONNECT);
         msgL1.head.description = 'Password is incorrect!';
-        socket.emit('Connect', msgL1);
+        socket.send(msgL1);
     }
 };
 
@@ -86,7 +87,7 @@ const editionHandler = (socket, io, msgL1) => {
         switch (msgL1.payload.head.type) {
             case TYPES_L2.DRAW:
                 lineHist.push(msgL1.payload.payload);
-                socket.broadcast.emit('edition', msgL1);
+                socket.broadcast.send(msgL1);
                 break;
             case TYPES_L2.UNDO:
                 //console.log(msgL1.payload.payload);
@@ -98,7 +99,7 @@ const editionHandler = (socket, io, msgL1) => {
                     }
                 }
                 msgL1.payload.payload = lineHist;
-                io.to(user.room).emit("edition", msgL1);
+                io.to(user.room).send(msgL1);
                 break;
         }
     }
@@ -116,6 +117,7 @@ const recvMsg = (socket, io) => {
                 connectHandler(socket, io, msgL1);
                 break;
             case TYPES_L1.DISCONNECT:
+                console.log(msgL1);
                 disconnHandler(socket, io, msgL1);
                 break;
             case TYPES_L1.EDIT:
