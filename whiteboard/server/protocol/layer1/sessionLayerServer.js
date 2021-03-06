@@ -13,7 +13,7 @@ const setPwd = (newpwd) => {
     pwd = newpwd;
 };
 
-let MAX_NUM_OF_CLIENTS = 5;
+let MAX_NUM_OF_CLIENTS = 2;
 // track the current number of the clients,
 // also serves as the generated user id for the client
 let currNumClients = 0;
@@ -41,7 +41,7 @@ const connectHandler = (socket, io, msgL1) => {
 
         const msgL1 = getMsgL1Template(TYPES_L1.CONNECT);
         //msgL1.head.userid = nextUserId;
-        msgL1.head.userid = socket.id;
+        msgL1.head.userid = generateUniqueId();
 
         //nextUserId += 1;
         currNumClients = users.length;
@@ -128,6 +128,19 @@ const recvMsg = (socket, io) => {
         }
     });
 };
+
+function generateUniqueId() {
+    const strong = 65535;
+    return (
+        new Date().getTime().toString(16) +
+        "-" +
+        Math.floor(strong * Math.random()).toString(16) +
+        "-" +
+        Math.floor(strong * Math.random()).toString(16) +
+        "-" +
+        Math.floor(strong * Math.random()).toString(16)
+    );
+}
 
 module.exports = {
     setPwd,

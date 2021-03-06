@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import { FaUndoAlt, FaEraser } from 'react-icons/fa';
 import queryString from 'query-string';
-//import Drawing from './drawing/drawing'
 
 import './whiteboard.css';
 
 import { connectDL2, disconnectDL2, drawLineDL2 } from '../../../protocol/layer2/operationTransferLayerDownstream.js';
+const { getUserid } = require("../../../protocol/layer2/stateManageLayer.js");
 
 let Socket;
+let userid;
 
 const Whiteboard = ({ location }) => {
     const [users, setUsers] = useState([]);
@@ -73,7 +74,13 @@ const Whiteboard = ({ location }) => {
             <script>
                 {
                     window.onload = () => {
-                        drawLineDL2(Socket);
+                        setTimeout(() => {
+                            getUserid().then(returnedUserid => {
+                                userid = returnedUserid;
+                                console.log(userid);
+                                drawLineDL2(userid);
+                            });
+                        }, 1000);
                     }
                 }
             </script>

@@ -29,7 +29,7 @@ const drawLineUL2 = (msgL2) => {
 
 const redrawLineUL2 = (msgL2) => {
     const lineHist = msgL2.payload;
-    console.log(lineHist);
+    //console.log(lineHist);
     var canvas = document.getElementsByClassName('whiteboard')[0];
     var context = canvas.getContext('2d');
     context.clearRect(

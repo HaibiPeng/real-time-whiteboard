@@ -6,9 +6,8 @@ const { getMsgL1Template, TYPES_L1 } = require("../../../../PDU/layer1/msgDefL1.
 const io = require("socket.io-client");
 //const { connected } = require("process");
 
-let webSocket = null;
-
-//let webSocket = io("ws://localhost:5000");       // web socket is implemented with Singleton Pattern
+let userid;
+let webSocket = null;       // web socket is implemented with Singleton Pattern
 
 const getWebSocket = () => {
     if (webSocket === null) {
@@ -37,12 +36,7 @@ const connectDL1 = (pwd, history) => {
     msgL1.head.pwd = pwd.toString();
     const Socket = getWebSocket();
     Socket.send(msgL1);
-    // Socket.on("Connect", msgL1 => {
-    //     if (!recvUL1(msgL1)) {
-    //         history.push('/');
-    //     }
-    // });
-    recvUL1(Socket);
+    recvUL1(Socket, history);
     return Socket;
 };
 
@@ -82,19 +76,20 @@ const sendDL1 = (msgL2) => {
  * Callback function triggered on receiving message.
  * Invoke a function from operation manage layer (layer2)
  */
-const recvUL1 = (Socket) => {
+const recvUL1 = (Socket, history) => {
     Socket.on('message', msgL1 => {
         switch (msgL1.head.type) {
             case TYPES_L1.CONNECT:
                 if (msgL1.head.userid != null) {
                     // connection successes!
-                    setUserid(msgL1.head.userid);
-                    console.log(msgL1.head.userid);
+                    userid = setUserid(msgL1.head.userid);
+                    console.log(userid);
                     return true;
                 } else {
                     //console.log(msgL1.head.description);
                     alert(msgL1.head.description);
-                    window.location.reload();
+                    history.push('/');
+                    Socket.off();
                     return false;
                 }
             //break;
@@ -109,7 +104,6 @@ const recvUL1 = (Socket) => {
         }
     })
 };
-
 
 module.exports = {
     connectDL1, disconnectDL1, sendDL1, recvUL1

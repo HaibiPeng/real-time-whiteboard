@@ -5,11 +5,13 @@
  */
 
 let USERID = null;
+
 const setUserid = (userId) => {
     USERID = userId;
+    return USERID;
 };
 
-const getUserid = () => {
+const getUserid = async() => {
     return USERID;
 };
 

@@ -28,15 +28,13 @@ const disconnectDL2 = () => {
 const actionHistory = [];
 let actionPointer = -1;
 
-const drawLineDL2 = (Socket) => {
+const drawLineDL2 = (userid) => {
     // can only draw when the userid is set, say, connect to the server
-    //console.log(getUserid());
-    //assert(getUserid() != null);
+    assert(userid != null);
     const msgL2 = getMsgL2Template(TYPES_L2.DRAW);
-    msgL2.head.userid = Socket.id;
+    msgL2.head.userid = userid;
     // fill msgL2
     var canvas = document.getElementsByClassName('whiteboard')[0];
-    //var canvas = document.getElementById('canvas');
     var colors = document.getElementsByClassName('color');
     var context = canvas.getContext('2d');
     var eraseIcon = document.getElementById('erase');
@@ -44,11 +42,11 @@ const drawLineDL2 = (Socket) => {
 
     eraseIcon.addEventListener('click', function () {
         current.color = 'white';
-    })
+    });
 
     undoIcon.addEventListener('click', function () {
         onUndo();
-    })
+    });
 
     window.addEventListener("keydown", (event) => {
         if ((event.ctrlKey || event.metaKey) && !drawing) {
@@ -72,7 +70,7 @@ const drawLineDL2 = (Socket) => {
         }
         const action = actionHistory[actionPointer];
         actionPointer -= 1;
-        undoDL2(Socket, action);
+        undoDL2(action);
         //Socket.emit("undo", { id: action.id, hidden: true });
     }
 
@@ -187,9 +185,9 @@ const drawLineDL2 = (Socket) => {
     }
 };
 
-const undoDL2 = (Socket, action) => {
+const undoDL2 = (action) => {
     const msgL2 = getMsgL2Template(TYPES_L2.UNDO);
-    msgL2.head.userid = Socket.id;
+    //msgL2.head.userid = Socket.id;
     msgL2.payload.id = action.id;
     msgL2.payload.hidden = true;
     sendDL2(msgL2);
