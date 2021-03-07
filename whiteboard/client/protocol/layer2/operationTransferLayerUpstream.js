@@ -9,7 +9,7 @@
 /* The following functions invoke functions from GUI to display editions.
  * 'U' is the abbr of Up, which means that the data flow is from the lower layer to the higher layer.
  */
-const { drawLineG, addStickNoteG, addImageG } = require("../../src/gui.js");
+const { drawLineG } = require('../../src/gui-draw.js')
 const { TYPES_L2 } = require("../../../../PDU/layer2/msgDefL2.js");
 const { storeDrawLinesL2, storeAddStickyNotesL2, storeAddImagesL2 } = require("./stateManageLayer.js");
 const { recvUL1 } = require('../layer1/sessionLayerClient.js');
@@ -23,7 +23,7 @@ const drawLineUL2 = (msgL2) => {
     var context = canvas.getContext('2d');
     var w = canvas.width;
     var h = canvas.height;
-    drawLineG(context, msgL2.payload.loc.x0 * w, msgL2.payload.loc.y0 * h, msgL2.payload.loc.x1 * w, msgL2.payload.loc.y1 * h, 
+    drawLineG(msgL2.payload.loc.x0 * w, msgL2.payload.loc.y0 * h, msgL2.payload.loc.x1 * w, msgL2.payload.loc.y1 * h,
         msgL2.payload.color, msgL2.payload.id, msgL2.payload.hidden);
 };
 
@@ -42,7 +42,7 @@ const redrawLineUL2 = (msgL2) => {
     var h = canvas.height;
     for (const line of lineHist) {
         //console.log(line.hidden)
-        drawLineG(context, line.loc.x0 * w, line.loc.y0 * h, line.loc.x1 * w, line.loc.y1 * h,
+        drawLineG(line.loc.x0 * w, line.loc.y0 * h, line.loc.x1 * w, line.loc.y1 * h,
             line.color, line.id, line.hidden);
     };
 };
@@ -78,7 +78,7 @@ const recvUL2 = (msgL2) => {
             redrawLineUL2(msgL2);
             break;
         case TYPES_L2.STICKYNOTE:
-            addStickyNoteUL2(msgL2);
+            // addStickyNoteUL2(msgL2);
             break;
         case TYPES_L2.ADDIMAGE:
             addImageUL2(msgL2);

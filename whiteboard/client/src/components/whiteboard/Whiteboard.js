@@ -5,9 +5,9 @@ import queryString from 'query-string';
 
 import './whiteboard.css';
 
-import { connectDL2, disconnectDL2, drawLineDL2 } from '../../../protocol/layer2/operationTransferLayerDownstream.js';
-const { getUserid } = require("../../../protocol/layer2/stateManageLayer.js");
-const { initCanvasG } = require("../../gui.js")
+const { connectDL2, disconnectDL2, drawLineDL2 } = require('protocol');
+const { getUserid } = require("protocol/layer2/stateManageLayer.js");
+const { initCanvasG } = require("../../gui-config.js")
 
 let Socket;
 let userid;
