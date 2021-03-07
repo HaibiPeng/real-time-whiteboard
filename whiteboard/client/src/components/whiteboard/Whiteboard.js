@@ -7,6 +7,7 @@ import './whiteboard.css';
 
 import { connectDL2, disconnectDL2, drawLineDL2 } from '../../../protocol/layer2/operationTransferLayerDownstream.js';
 const { getUserid } = require("../../../protocol/layer2/stateManageLayer.js");
+const { initCanvasG } = require("../../gui.js")
 
 let Socket;
 let userid;
@@ -29,6 +30,7 @@ const Whiteboard = ({ location }) => {
     useEffect(() => {
         Socket.on('connection', (message) => {
             setMessage(message);
+            initCanvasG();
         });
 
         Socket.on("roomData", ({ users }) => {
