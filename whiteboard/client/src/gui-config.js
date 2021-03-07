@@ -3,7 +3,7 @@
  * Function to initialize gui is here!
  */
 
-const { drawLineG } = require('./gui-draw.js');
+const { drawLineG, drawLineDG } = require('./gui-draw.js');
 const { DrawLineContext } = require('./gui-state.js');
 const protocol = require("protocol");
 
@@ -20,13 +20,25 @@ function onMouseDown(e) {
 function onMouseUp(e) {
     if (!DrawLineContext.drawing) { return; }
     DrawLineContext.drawing = false;
-    drawLineG(DrawLineContext.x, DrawLineContext.y, e.clientX || e.touches[0].clientX, e.clientY || e.touches[0].clientY, DrawLineContext.color, DrawLineContext.id, false, true);
+    drawLineDG(
+        DrawLineContext.x,
+        DrawLineContext.y,
+        e.clientX || e.touches[0].clientX,
+        e.clientY || e.touches[0].clientY,
+        DrawLineContext.color,
+        DrawLineContext.id);
     putAction({ act: 'drawing', id: DrawLineContext.id });
 }
 
 function onMouseMove(e) {
     if (!DrawLineContext.drawing) { return; }
-    drawLineG(DrawLineContext.x, DrawLineContext.y, e.clientX || e.touches[0].clientX, e.clientY || e.touches[0].clientY, DrawLineContext.color, DrawLineContext.id, false, true);
+    drawLineDG(
+        DrawLineContext.x,
+        DrawLineContext.y,
+        e.clientX || e.touches[0].clientX,
+        e.clientY || e.touches[0].clientY,
+        DrawLineContext.color,
+        DrawLineContext.id);
     DrawLineContext.x = e.clientX || e.touches[0].clientX;
     DrawLineContext.y = e.clientY || e.touches[0].clientY;
 }
