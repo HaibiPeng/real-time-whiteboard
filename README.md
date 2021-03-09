@@ -1,5 +1,8 @@
-# real-time-whiteboard
+# real-time-whiteboard(currently still under development)
 course assignment for ELEC-E7320 - Internet Protocols
+
+# A simple demo link
+https://real-time-white-board.herokuapp.com/
 
 # How to run the app
 Run these commands in terminal:
