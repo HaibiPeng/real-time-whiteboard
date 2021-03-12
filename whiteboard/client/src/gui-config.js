@@ -7,11 +7,9 @@ const { drawLineDG } = require('./gui-draw.js');
 const { addStickyNoteDG } = require('./gui-stickynote.js');
 const { DrawLineContext } = require('./gui-state.js');
 const protocol  = require("protocol");
-const { onUnDoDG } = require('./gui-undo.js');
+const { onUnDo } = require('./gui-undo.js');
 const { getDrawLinePointer, drawLineAction, getCurAction, unDoDrawLineToDecreasePointer } = require('../protocol/layer2/stateManageLayer');
 
-const actionHistory = [];
-let actionPointer = -1;
 
 function onMouseDown(e) {
     DrawLineContext.drawing = true;
@@ -53,13 +51,6 @@ function onColorUpdate(e) {
     DrawLineContext.color = e.target.className.split(' ')[1];
 }
 
-function putAction(data) {
-    if (actionHistory.length - 1 > actionPointer) {
-        actionHistory.splice(actionPointer + 1);
-    }
-    actionHistory.push(data);
-    actionPointer += 1;
-}
 
 function onUndo() {
     //old version
@@ -84,7 +75,7 @@ function onUndo() {
     unDoDrawLineToDecreasePointer();
     //console.log("cur action:", action);
     // action.id is the id of last draw line
-    //onUnDoDG(action.id);
+    onUnDo(action.id);
     protocol.undoDL2(action);
 }
 

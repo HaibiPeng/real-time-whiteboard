@@ -20,12 +20,14 @@ let drawLines = []; // [userid2: [], userid2: []]
 
 let drawLineHistory = [];
 
+// list to contain all draw lines
 let allDrawLines = []
 
 //max line history is not used at this time, if needed, it will be added.
 // const MAX_UNDO_NUMBER = 10;
 let drawLinePointer = -1;
 
+//list to contain all sticky notes
 let stickyNotes = [];
 let images = [];
 
@@ -68,8 +70,8 @@ const deleteStickyNoteL2 = (id) => {
     console.log(stickyNotes);
 };
 
-const updataStickyNoteL2 = (id, note) => {
-    var updatedNote = stickyNotes.findIndex(Note => Note.id === id);
+const updateStickyNoteL2 = (id, note) => {
+    const updatedNote = stickyNotes.findIndex(Note => Note.id === id);
     stickyNotes[updatedNote] = note;
 }
 
@@ -82,6 +84,6 @@ const storeAddImagesL2 = (msgL2) => {};
 // TODO: functions to detect and handle conflicts, which will be invoked by functions from operation transfer sub-layer
 
 module.exports = {
-    setUserid, getUserid, storeAddStickyNotesL2, storeAddImagesL2, getStickyNotes, deleteStickyNoteL2, updataStickyNoteL2,
+    setUserid, getUserid, storeAddStickyNotesL2, storeAddImagesL2, getStickyNotes, deleteStickyNoteL2, updateStickyNoteL2,
     drawLineAction, getDrawLineHistory, getDrawLinePointer, unDoDrawLineToDecreasePointer, allDrawLines, getCurAction
 };

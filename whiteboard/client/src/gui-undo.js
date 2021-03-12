@@ -2,7 +2,7 @@
 const { doDrawLineG } = require("./gui-draw.js")
 const { allDrawLines } = require('../protocol/layer2/stateManageLayer');
 
-const onUnDoDG = (line_id) => {
+const onUnDo = (line_id) => {
     for (let line of allDrawLines) {
         if (line.line_id === line_id) {
             line.hidden = true;
@@ -31,5 +31,5 @@ const redraw = () => {
 }
 
 module.exports = {
-    onUnDoDG
+    onUnDo
 }

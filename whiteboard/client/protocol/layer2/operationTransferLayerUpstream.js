@@ -12,9 +12,9 @@
 const { drawLineUG } = require('../../src/gui-draw.js');
 const { addStickyNoteUG } = require('../../src/gui-stickynote.js');
 const { TYPES_L2 } = require("../../../../PDU/layer2/msgDefL2.js");
-const { storeDrawLinesL2, storeAddStickyNotesL2, storeAddImagesL2 } = require("./stateManageLayer.js");
+// const { storeDrawLinesL2, storeAddStickyNotesL2, storeAddImagesL2 } = require("./stateManageLayer.js");
 //const { recvUL1 } = require('../layer1/sessionLayerClient.js');
-const { onUnDoDG } = require('../../src/gui-undo.js')
+const { onUnDo } = require('../../src/gui-undo.js')
 
 const drawLineUL2 = (msgL2) => {
     // TODO: store edition
@@ -38,34 +38,34 @@ const drawLineUL2 = (msgL2) => {
 const unDoLineL2 = (msgL2) => {
     // onUnDoDG(msgL2.lineId)
     // console.log("cur all lines",allDrawLines)
-    onUnDoDG(msgL2.payload.lineId);
+    onUnDo(msgL2.payload.lineId);
 };
 
-const redrawLineUL2 = (msgL2) => {
-    const lineHist = msgL2.payload;
-    //console.log(lineHist);
-    var canvas = document.getElementsByClassName('whiteboard')[0];
-    var context = canvas.getContext('2d');
-    context.clearRect(
-        0,
-        0,
-        context.canvas.clientWidth,
-        context.canvas.clientHeight
-    );
-    var w = canvas.width;
-    var h = canvas.height;
-    for (const line of lineHist) {
-        //console.log(line.hidden)
-        drawLineUG(
-            line.loc.x0,
-            line.loc.y0,
-            line.loc.x1,
-            line.loc.y1,
-            line.color,
-            line.id,
-            line.hidden);
-    };
-};
+// const redrawLineUL2 = (msgL2) => {
+//     const lineHist = msgL2.payload;
+//     //console.log(lineHist);
+//     var canvas = document.getElementsByClassName('whiteboard')[0];
+//     var context = canvas.getContext('2d');
+//     context.clearRect(
+//         0,
+//         0,
+//         context.canvas.clientWidth,
+//         context.canvas.clientHeight
+//     );
+//     var w = canvas.width;
+//     var h = canvas.height;
+//     for (const line of lineHist) {
+//         //console.log(line.hidden)
+//         drawLineUG(
+//             line.loc.x0,
+//             line.loc.y0,
+//             line.loc.x1,
+//             line.loc.y1,
+//             line.color,
+//             line.id,
+//             line.hidden);
+//     };
+// };
 
 
 const addStickyNoteUL2 = (msgL2) => {
@@ -78,7 +78,7 @@ const addStickyNoteUL2 = (msgL2) => {
 const addImageUL2 = (msgL2) => {
     // TODO: store the edition
     // TODO: invoke functions form GUI to display the edition
-    storeAddImagesL2(msgL2);
+    // storeAddImagesL2(msgL2);
     //addImageG(msgL2);
 };
 
