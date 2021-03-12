@@ -35,6 +35,7 @@ const drawLineDL2 = (x0, y0, x1, y1, color) => {
     msgL2.payload.loc.y1 = y1;
     msgL2.payload.color = color;
     msgL2.payload.id = getUserid();
+    // console.log("drawLineDL2:", msgL2)
     sendDL2(msgL2);
 };
 
@@ -43,6 +44,8 @@ const undoDL2 = (action) => {
     //msgL2.head.userid = Socket.id;
     msgL2.payload.id = action.id;
     msgL2.payload.hidden = true;
+    console.log("going to broadcast undo:", msgL2)
+
     sendDL2(msgL2);
 };
 
@@ -71,12 +74,12 @@ const addImageDL2 = (x, y, w, h, gray, bytes) => {
     sendDL2(msgL2);
 };
 
-var { sendDL1 } = require("../layer1/sessionLayerClient.js");
+const { sendDL1 } = require("../layer1/sessionLayerClient.js");
 const sendDL2 = (msgL2) => {
     sendDL1(msgL2);
 };
 
 module.exports = {
     connectDL2, disconnectDL2, drawLineDL2, addImageDL2, addStickyNoteDL2,
-    undoDL2,
+    undoDL2, sendDL2
 };

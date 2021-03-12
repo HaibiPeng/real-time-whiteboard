@@ -3,11 +3,12 @@
 // ***************** META DATA BEGIN *************
 const DrawLineContext = {
     canvas: null,
-    color: null,
+    color: 'black',
     x: null,
     y: null,
     drawing: false,
     id: null,
+    hidden: false
 };
 
 const getCanvasSizeG = () => {

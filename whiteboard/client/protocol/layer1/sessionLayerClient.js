@@ -2,6 +2,7 @@
 
 const { recvUL2 } = require("../layer2/operationTransferLayerUpstream.js");
 const { setUserid } = require("../layer2/stateManageLayer.js");
+const  { getUserid } = require("../layer2/stateManageLayer.js")
 const { getMsgL1Template, TYPES_L1 } = require("../../../../PDU/layer1/msgDefL1.js");
 const io = require("socket.io-client");
 //const { connected } = require("process");
@@ -34,6 +35,9 @@ const connectDL1 = (pwd, history) => {
     const msgL1 = getMsgL1Template(TYPES_L1.CONNECT);
     msgL1.head.type = 'connect';
     msgL1.head.pwd = pwd.toString();
+    getUserid().then(returnedUserid => {
+        msgL1.head.userid = returnedUserid;
+    });
     const Socket = getWebSocket();
     Socket.send(msgL1);
     recvUL1(Socket, history);

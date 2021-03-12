@@ -24,7 +24,7 @@ const getMsgL2TemplateDraw = () => {
             },
             color: null,
             hidden: null,
-            id: null
+            lineId: null
         },
     };
     return msgL2;

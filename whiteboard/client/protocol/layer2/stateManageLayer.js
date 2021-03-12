@@ -17,12 +17,44 @@ const getUserid = async() => {
 
 // TODO: functions to store different editions
 let drawLines = []; // [userid2: [], userid2: []]
+let drawLineHistory = [];
+
+let allDrawLines = []
+
+//max line history is not used at this time, if needed, it will be added.
+// const MAX_UNDO_NUMBER = 10;
+let drawLinePointer = -1;
 let stickNotes = [];
 let images = [];
 
-const storeDrawLinesL2 = (msgL2) => {
-    // TODO, STEP 1
-};
+//store drawline action
+function drawLineAction(data) {
+    if (drawLineHistory.length - 1 > drawLinePointer) {
+        drawLineHistory.splice(drawLinePointer + 1);
+    }
+    drawLineHistory.push(data);
+
+    drawLinePointer += 1;
+}
+
+
+function getCurAction() {
+    return drawLineHistory[drawLinePointer]
+}
+
+//get drawlinehistory list
+function getDrawLineHistory() {
+    return drawLineHistory;
+}
+
+//get cur drawlinePointer
+function getDrawLinePointer() {
+    return drawLinePointer;
+}
+
+function unDoDrawLineToDecreasePointer() {
+    drawLinePointer -= 1;
+}
 
 const storeAddStickyNotesL2 = (msgL2) => {};
 
@@ -32,5 +64,5 @@ const storeAddImagesL2 = (msgL2) => {};
 
 module.exports = {
     setUserid, getUserid,
-    storeDrawLinesL2, storeAddStickyNotesL2, storeAddImagesL2,
+    drawLineAction,getDrawLineHistory,getDrawLinePointer,unDoDrawLineToDecreasePointer, storeAddStickyNotesL2, storeAddImagesL2, allDrawLines, getCurAction
 };

@@ -4,6 +4,7 @@ import { FaUndoAlt, FaEraser } from 'react-icons/fa';
 import queryString from 'query-string';
 
 import './whiteboard.css';
+import {FaRegStickyNote} from "react-icons/fa";
 
 const { connectDL2, disconnectDL2, drawLineDL2 } = require('protocol');
 const { getUserid } = require("protocol/layer2/stateManageLayer.js");
@@ -70,6 +71,7 @@ const Whiteboard = ({ location }) => {
                     <FaEraser size={35} />
                 </div>
                 <div id="undo"><FaUndoAlt size={30} /></div>
+                <div id="note"><FaRegStickyNote size={30}/></div>
             </div>
 
             <script src="/socket.io/socket.io.js"></script>

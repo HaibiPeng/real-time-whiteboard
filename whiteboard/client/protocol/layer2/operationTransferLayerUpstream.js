@@ -19,33 +19,41 @@ const drawLineUL2 = (msgL2) => {
     // TODO: handle (possible) conflicts
     // TODO: invoke functions form GUI to display the edition
     //storeDrawLinesL2(msgL2);
-    var canvas = document.getElementsByClassName('whiteboard')[0];
-    var context = canvas.getContext('2d');
-    var w = canvas.width;
-    var h = canvas.height;
+    const canvas = document.getElementsByClassName('whiteboard')[0];
+    const context = canvas.getContext('2d');
+    const w = canvas.width;
+    const h = canvas.height;
+
+    // console.log("drawLineUL2 now：", msgL2.payload)
     drawLineUG(
         msgL2.payload.loc.x0,
         msgL2.payload.loc.y0,
         msgL2.payload.loc.x1,
         msgL2.payload.loc.y1,
         msgL2.payload.color,
-        msgL2.payload.id,
-        msgL2.payload.hidden);
+        msgL2.payload.id);
 };
 
+const unDoLineL2 = (msgL2) => {
+    console.log("do undo")
+}
+
+// unused method
 const redrawLineUL2 = (msgL2) => {
     const lineHist = msgL2.payload;
     //console.log(lineHist);
-    var canvas = document.getElementsByClassName('whiteboard')[0];
-    var context = canvas.getContext('2d');
+    const canvas = document.getElementsByClassName('whiteboard')[0];
+    console.log("这是啥",canvas)
+    const context = canvas.getContext('2d');
     context.clearRect(
         0,
         0,
         context.canvas.clientWidth,
         context.canvas.clientHeight
     );
-    var w = canvas.width;
-    var h = canvas.height;
+    const w = canvas.width;
+    const h = canvas.height;
+    console.log("lineHist type", lineHist.type)
     for (const line of lineHist) {
         //console.log(line.hidden)
         drawLineUG(
@@ -84,10 +92,13 @@ const recvUL2 = (msgL2) => {
     // invoke drawLineUL2, addStickyNoteUL2, etc. according to edition type
     switch (msgL2.head.type) {
         case TYPES_L2.DRAW:
+            // console.log("draw_line_id:", msgL2.payload.lineId)
             drawLineUL2(msgL2);
             break;
         case TYPES_L2.UNDO:
-            redrawLineUL2(msgL2);
+            // redrawLineUL2(msgL2);
+            console.log("undo msg:", msgL2.payload.id)
+            unDoLineL2(msgL2)
             break;
         case TYPES_L2.STICKYNOTE:
             // addStickyNoteUL2(msgL2);

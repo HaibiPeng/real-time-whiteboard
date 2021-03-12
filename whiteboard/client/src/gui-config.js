@@ -3,14 +3,18 @@
  * Function to initialize gui is here!
  */
 
-const { drawLineG, drawLineDG } = require('./gui-draw.js');
+
+// eslint-disable-next-line
+const { drawLineUG, drawLineDG } = require('./gui-draw.js');
 const { DrawLineContext } = require('./gui-state.js');
+const { onUnDoDG } = require('./gui-undo.js')
 const protocol = require("protocol");
 
 const actionHistory = [];
 let actionPointer = -1;
 
 function onMouseDown(e) {
+    console.log("what is:",e)
     DrawLineContext.drawing = true;
     DrawLineContext.x = e.clientX || e.touches[0].clientX;
     DrawLineContext.y = e.clientY || e.touches[0].clientY;
@@ -26,8 +30,18 @@ function onMouseUp(e) {
         e.clientX || e.touches[0].clientX,
         e.clientY || e.touches[0].clientY,
         DrawLineContext.color,
-        DrawLineContext.id);
-    putAction({ act: 'drawing', id: DrawLineContext.id });
+        DrawLineContext.id,
+        DrawLineContext.hidden);
+
+    console.log("before:",protocol.getDrawLinePointer())
+    protocol.drawLineAction({act: "drawLine", id: DrawLineContext.id})
+    console.log("after:",protocol.getDrawLinePointer())
+    // console.log("current line id:", DrawLineContext.id)
+    console.log("current user draw lines:", protocol.getDrawLineHistory())
+    // putAction({ act: 'drawing', id: DrawLineContext.id });
+
+    // console.log("cur_line: ", DrawLineContext.hidden);
+    // console.log("drawing id", DrawLineContext)
 }
 
 function onMouseMove(e) {
@@ -45,8 +59,10 @@ function onMouseMove(e) {
 
 function onColorUpdate(e) {
     DrawLineContext.color = e.target.className.split(' ')[1];
+    console.log("current color:", DrawLineContext.color)
 }
 
+// eslint-disable-next-line
 function putAction(data) {
     if (actionHistory.length - 1 > actionPointer) {
         actionHistory.splice(actionPointer + 1);
@@ -55,15 +71,38 @@ function putAction(data) {
     actionPointer += 1;
 }
 
+// eslint-disable-next-line
+function onStickyNote() {
+
+}
+
 function onUndo() {
-    if (actionPointer < 0) {
+    //old version
+    // console.log("trying undo")
+    // console.log("before actionHistory: ", actionHistory)
+    // if (actionPointer < 0) {
+    //     return;
+    // }
+    // const action = actionHistory[actionPointer];
+    // actionPointer -= 1;
+    // console.log("after actionHistory: ", actionHistory)
+    // protocol.undoDL2(action);
+    // // Socket.emit("undo", { id: action.id, hidden: true });
+
+    // new version of onUndo
+    // console.log("why not undo")
+    if(protocol.getDrawLinePointer() < 0){
+        console.log("You have no line to undo")
         return;
     }
-    const action = actionHistory[actionPointer];
-    actionPointer -= 1;
-    protocol.undoDL2(action);
-    //Socket.emit("undo", { id: action.id, hidden: true });
+    const action = protocol.getCurAction();
+    protocol.unDoDrawLineToDecreasePointer();
+    console.log("cur action:", action);
+    // action.id is the id of last draw line
+    onUnDoDG(action.id);
 }
+
+
 
 // limit the number of events per second
 function throttle(callback, delay) {
@@ -96,10 +135,23 @@ function onResize() {
     DrawLineContext.canvas.height = window.innerHeight;
 }
 
-const initCanvasG = () => {
+const {getUserid} = require('protocol')
+
+
+const initCanvasG = (data) => {
+    // sleep(1000)
+    setTimeout(() => {
+        getUserid().then(returnedUserid => {
+            console.log("recon: ",returnedUserid);
+        });
+    }, 1000);
+
     var colors = document.getElementsByClassName('color');
     var eraseIcon = document.getElementById('erase');
     var undoIcon = document.getElementById('undo');
+    // Sticky note
+    const noteIcon = document.getElementById('note');
+
 
     eraseIcon.addEventListener('click', function () {
         DrawLineContext.color = 'white';
@@ -108,6 +160,10 @@ const initCanvasG = () => {
     undoIcon.addEventListener('click', function () {
         onUndo();
     });
+
+    noteIcon.addEventListener('click', function () {
+
+    })
 
     window.addEventListener("keydown", (event) => {
         if ((event.ctrlKey || event.metaKey) && !DrawLineContext.drawing) {
@@ -137,6 +193,7 @@ const initCanvasG = () => {
     DrawLineContext.canvas = canvas;
     onResize();
     console.log("CANVAS INITILIZED!");
+    console.log(data)
 };
 
 module.exports = {
