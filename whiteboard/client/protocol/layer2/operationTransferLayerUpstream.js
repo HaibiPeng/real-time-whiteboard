@@ -11,8 +11,9 @@
  */
 const { drawLineUG } = require('../../src/gui-draw.js')
 const { TYPES_L2 } = require("../../../../PDU/layer2/msgDefL2.js");
-const { storeDrawLinesL2, storeAddStickyNotesL2, storeAddImagesL2 } = require("./stateManageLayer.js");
+const { storeDrawLinesL2, storeAddStickyNotesL2, storeAddImagesL2, allDrawLines } = require("./stateManageLayer.js");
 const { recvUL1 } = require('../layer1/sessionLayerClient.js');
+const { onUnDoDG } = require('../../src/gui-undo.js')
 
 const drawLineUL2 = (msgL2) => {
     // TODO: store edition
@@ -31,11 +32,15 @@ const drawLineUL2 = (msgL2) => {
         msgL2.payload.loc.x1,
         msgL2.payload.loc.y1,
         msgL2.payload.color,
-        msgL2.payload.id);
+        msgL2.payload.lineId,
+        msgL2.payload.hidden);
+
 };
 
 const unDoLineL2 = (msgL2) => {
-    console.log("do undo")
+    // onUnDoDG(msgL2.lineId)
+    // console.log("cur all lines",allDrawLines)
+    onUnDoDG(msgL2.payload.lineId)
 }
 
 // unused method
@@ -97,7 +102,7 @@ const recvUL2 = (msgL2) => {
             break;
         case TYPES_L2.UNDO:
             // redrawLineUL2(msgL2);
-            console.log("undo msg:", msgL2.payload.id)
+            // console.log("undo msg:", msgL2.payload.id)
             unDoLineL2(msgL2)
             break;
         case TYPES_L2.STICKYNOTE:

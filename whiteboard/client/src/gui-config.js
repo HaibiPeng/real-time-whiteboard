@@ -100,6 +100,7 @@ function onUndo() {
     console.log("cur action:", action);
     // action.id is the id of last draw line
     onUnDoDG(action.id);
+    protocol.undoDL2(action);
 }
 
 

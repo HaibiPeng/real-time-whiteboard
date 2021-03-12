@@ -23,7 +23,7 @@ const disconnectDL2 = () => {
     disconnectDL1();
 };
 
-const drawLineDL2 = (x0, y0, x1, y1, color) => {
+const drawLineDL2 = (x0, y0, x1, y1, color,line_id, hidden) => {
     // can only draw when the userid is set, say, connect to the server
     assert(getUserid() != null);
     const msgL2 = getMsgL2Template(TYPES_L2.DRAW);
@@ -34,7 +34,8 @@ const drawLineDL2 = (x0, y0, x1, y1, color) => {
     msgL2.payload.loc.y0 = y0;
     msgL2.payload.loc.y1 = y1;
     msgL2.payload.color = color;
-    msgL2.payload.id = getUserid();
+    msgL2.payload.lineId = line_id;
+    msgL2.payload.hidden = hidden;
     // console.log("drawLineDL2:", msgL2)
     sendDL2(msgL2);
 };
@@ -42,8 +43,8 @@ const drawLineDL2 = (x0, y0, x1, y1, color) => {
 const undoDL2 = (action) => {
     const msgL2 = getMsgL2Template(TYPES_L2.UNDO);
     //msgL2.head.userid = Socket.id;
-    msgL2.payload.id = action.id;
-    msgL2.payload.hidden = true;
+    msgL2.payload.lineId = action.id;
+    // msgL2.payload.hidden = true;
     console.log("going to broadcast undo:", msgL2)
 
     sendDL2(msgL2);
