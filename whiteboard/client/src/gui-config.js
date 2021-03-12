@@ -166,13 +166,13 @@ const initCanvasG = (data) => {
 
     })
 
-    window.addEventListener("keydown", (event) => {
-        if ((event.ctrlKey || event.metaKey) && !DrawLineContext.drawing) {
-            if (event.key === "z") {
-                onUndo();
-            }
-        }
-    });
+    // window.addEventListener("keydown", (event) => {
+    //     if ((event.ctrlKey || event.metaKey) && !DrawLineContext.drawing) {
+    //         if (event.key === "z") {
+    //             onUndo();
+    //         }
+    //     }
+    // });
 
     const canvas = document.getElementsByClassName('whiteboard')[0];
     canvas.addEventListener('mousedown', onMouseDown, false);
@@ -181,10 +181,10 @@ const initCanvasG = (data) => {
     canvas.addEventListener('mousemove', throttle(onMouseMove, 10), false);
 
     //Touch support for mobile devices
-    canvas.addEventListener('touchstart', onMouseDown, false);
-    canvas.addEventListener('touchend', onMouseUp, false);
-    canvas.addEventListener('touchcancel', onMouseUp, false);
-    canvas.addEventListener('touchmove', throttle(onMouseMove, 10), false);
+    // canvas.addEventListener('touchstart', onMouseDown, false);
+    // canvas.addEventListener('touchend', onMouseUp, false);
+    // canvas.addEventListener('touchcancel', onMouseUp, false);
+    // canvas.addEventListener('touchmove', throttle(onMouseMove, 10), false);
 
     for (var i = 0; i < colors.length; i++) {
         colors[i].addEventListener('click', onColorUpdate, false);
