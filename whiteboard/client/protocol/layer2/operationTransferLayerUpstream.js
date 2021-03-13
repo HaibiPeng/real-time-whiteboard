@@ -10,7 +10,7 @@
  * 'U' is the abbr of Up, which means that the data flow is from the lower layer to the higher layer.
  */
 const { drawLineUG } = require('../../src/gui-draw.js');
-const { addStickyNoteUG } = require('../../src/gui-stickynote.js');
+const { addStickyNoteUG, deleteStickyNoteUG, updateStickyNoteUG } = require('../../src/gui-stickynote.js');
 const { TYPES_L2 } = require("../../../../PDU/layer2/msgDefL2.js");
 // const { storeDrawLinesL2, storeAddStickyNotesL2, storeAddImagesL2 } = require("./stateManageLayer.js");
 //const { recvUL1 } = require('../layer1/sessionLayerClient.js');
@@ -75,6 +75,21 @@ const addStickyNoteUL2 = (msgL2) => {
     addStickyNoteUG(msgL2);
 };
 
+const deleteStickyNoteUL2 = (msgL2) => {
+    deleteStickyNoteUG(msgL2.payload.id);
+}
+
+const updateStickyNoteUL2 = (msgL2) => {
+    const note = {
+        id: msgL2.payload.id,
+        x: msgL2.payload.loc.x,
+        y: msgL2.payload.loc.y,
+        text: msgL2.payload.text,
+        zindex: msgL2.payload.loc.zindex,
+    };
+    updateStickyNoteUG(msgL2.payload.id, note);
+}
+
 const addImageUL2 = (msgL2) => {
     // TODO: store the edition
     // TODO: invoke functions form GUI to display the edition
@@ -100,7 +115,20 @@ const recvUL2 = (msgL2) => {
             unDoLineL2(msgL2)
             break;
         case TYPES_L2.STICKYNOTE:
-            addStickyNoteUL2(msgL2);
+            switch (msgL2.payload.actiontype) {
+                case 'add':
+                    addStickyNoteUL2(msgL2);
+                    break;
+                case 'delete':
+                    deleteStickyNoteUL2(msgL2);
+                    break;
+                case 'update':
+                    console.log('updating');
+                    updateStickyNoteUL2(msgL2);
+                    break;
+                default:
+                    console.log("Invalid message type!(L2, client side)");
+            }
             break;
         case TYPES_L2.ADDIMAGE:
             addImageUL2(msgL2);

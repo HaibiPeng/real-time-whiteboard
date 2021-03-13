@@ -52,6 +52,7 @@ const getMsgL2TemplateStickyNote = () => {
         },
         payload: {
             id: null,
+            actiontype: null,
             loc: {
                 x: null,
                 y: null,

@@ -50,17 +50,40 @@ const undoDL2 = (action) => {
 
 const addStickyNoteDL2 = (id, x, y, w, h, text, zindex) => {
     const msgL2 = getMsgL2Template(TYPES_L2.STICKYNOTE);
-    msgL2.head.userid = getUserid();
+    //msgL2.head.userid = getUserid();
     msgL2.payload.id = id;
+    msgL2.payload.actiontype = 'add';
     msgL2.payload.loc.x = x;
     msgL2.payload.loc.y = y;
     msgL2.payload.loc.w = w;
     msgL2.payload.loc.h = h;
+    msgL2.payload.loc.zindex = zindex;
     msgL2.payload.text = text;
-    msgL2.payload.zindex = zindex;
     //storeAddStickyNotesL2(msgL2);
     sendDL2(msgL2);
 };
+
+const deleteStickyNoteDL2 = (id) => {
+    const msgL2 = getMsgL2Template(TYPES_L2.STICKYNOTE);
+    //msgL2.head.userid = getUserid();
+    msgL2.payload.id = id;
+    msgL2.payload.actiontype = 'delete';
+    sendDL2(msgL2);
+}
+
+const updateStickyNoteDL2 = (id, note) => {
+    const msgL2 = getMsgL2Template(TYPES_L2.STICKYNOTE);
+    //msgL2.head.userid = getUserid();
+    msgL2.payload.id = id;
+    msgL2.payload.actiontype = 'update';
+    msgL2.payload.loc.x = note.x;
+    msgL2.payload.loc.y = note.y;
+    msgL2.payload.loc.w = note.w;
+    msgL2.payload.loc.h = note.h;
+    msgL2.payload.loc.zindex = note.zindex;
+    msgL2.payload.text = note.text;
+    sendDL2(msgL2);
+}
 
 const addImageDL2 = (x, y, w, h, gray, bytes) => {
     const msgL2 = getMsgL2Template(TYPES_L2.ADDIMAGE);
@@ -80,6 +103,6 @@ const sendDL2 = (msgL2) => {
 };
 
 module.exports = {
-    connectDL2, disconnectDL2, drawLineDL2, undoDL2, addStickyNoteDL2, addImageDL2
+    connectDL2, disconnectDL2, drawLineDL2, undoDL2, addStickyNoteDL2, deleteStickyNoteDL2, updateStickyNoteDL2, addImageDL2
 };
 

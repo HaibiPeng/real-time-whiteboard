@@ -104,6 +104,7 @@ const editionHandler = (socket, io, msgL1) => {
                 break;
             case TYPES_L2.STICKYNOTE:
                 socket.broadcast.send(msgL1);
+                socket.broadcast.emit('stickynote');
                 break;
         }
     }

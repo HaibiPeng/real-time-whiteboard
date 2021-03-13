@@ -9,18 +9,18 @@ const io = require("socket.io-client");
 let userid;
 let webSocket = null;       // web socket is implemented with Singleton Pattern
 
-const getWebSocket = () => {
+const getWebSocket = (history) => {
     if (webSocket === null) {
         const io = require("socket.io-client");
         webSocket = io("ws://localhost:5000");
         /* webSocket.on("connect", () => {
             console.log('Connect to server!');
-        });
+        });*/
 
         webSocket.on("message", msgL1 => {
-            console.log(msgL1);
-            recvUL1(msgL1);
-        }); */
+            //console.log(msgL1);
+            recvUL1(msgL1, webSocket, history);
+        });
     }
     return webSocket;
 };
@@ -34,9 +34,9 @@ const connectDL1 = (pwd, history) => {
     const msgL1 = getMsgL1Template(TYPES_L1.CONNECT);
     msgL1.head.type = 'connect';
     msgL1.head.pwd = pwd.toString();
-    const Socket = getWebSocket();
+    const Socket = getWebSocket(history);
     Socket.send(msgL1);
-    recvUL1(Socket, history);
+    //recvUL1(Socket, history);
     return Socket;
 };
 
@@ -58,7 +58,7 @@ const sendDL1 = (msgL2) => {
     msgL1.payload = msgL2;
     const Socket = getWebSocket();
     Socket.send(msgL1);
-    recvUL1(Socket);
+    //recvUL1(Socket);
 };
 
 // const socket = getWebSocket();
@@ -76,8 +76,9 @@ const sendDL1 = (msgL2) => {
  * Callback function triggered on receiving message.
  * Invoke a function from operation manage layer (layer2)
  */
-const recvUL1 = (Socket, history) => {
-    Socket.on('message', msgL1 => {
+const recvUL1 = (msgL1, Socket, history) => {
+    //Socket.on('message', msgL1 => {
+        //console.log(2);
         switch (msgL1.head.type) {
             case TYPES_L1.CONNECT:
                 if (msgL1.head.userid != null) {
@@ -102,7 +103,7 @@ const recvUL1 = (Socket, history) => {
             default:
                 console.log("Invalid message type! (L1, client side)");
         }
-    })
+    //})
 };
 
 module.exports = {

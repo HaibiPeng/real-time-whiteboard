@@ -3,6 +3,7 @@
  * Function to initialize gui is here!
  */
 
+const { v4: uuidv4 } = require('uuid');
 const { drawLineDG } = require('./gui-draw.js');
 const { addStickyNoteDG } = require('./gui-stickynote.js');
 const { DrawLineContext } = require('./gui-state.js');
@@ -10,12 +11,11 @@ const protocol  = require("protocol");
 const { onUnDo } = require('./gui-undo.js');
 const { getDrawLinePointer, drawLineAction, getCurAction, unDoDrawLineToDecreasePointer } = require('../protocol/layer2/stateManageLayer');
 
-
 function onMouseDown(e) {
     DrawLineContext.drawing = true;
     DrawLineContext.x = e.clientX || e.touches[0].clientX;
     DrawLineContext.y = e.clientY || e.touches[0].clientY;
-    DrawLineContext.id = generateUniqueId();
+    DrawLineContext.id = uuidv4();
 }
 
 function onMouseUp(e) {

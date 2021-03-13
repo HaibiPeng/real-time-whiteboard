@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import Draggable from 'react-draggable';
 import TextareaAutosize from 'react-textarea-autosize';
 import { TiDeleteOutline } from 'react-icons/ti';
-
 import './Stickynote.css';
+
+const { v4: uuidv4 } = require('uuid');
 
 class StickyNote extends Component {
     constructor(props) {
@@ -29,16 +30,18 @@ class StickyNote extends Component {
         this.setState({
             currIndex: 500,
         });
-        this.props.setQuery(Math.random());
         this.props.onDrag(this.state.id, note);
+        //this.props.setQuery(uuidv4());
     };
 
     onStopDrag = (e, ui) => {
         this.setState({
+            text: this.state.text,
             x: ui.x,
             y: ui.y,
             currIndex: this.zindex,
         });
+        //this.props.setQuery(uuidv4());
     }
 
     onContentChange = (event) => {
@@ -46,12 +49,12 @@ class StickyNote extends Component {
             text: event.target.value,
         });
         this.updateStickyNote();
+        //this.props.setQuery(uuidv4());
     };
 
-
     deleteStickyNote = () => {
-        this.props.setQuery(Math.random);
         this.props.deleteStickyNote(this.state.id);
+        this.props.setQuery(uuidv4());
     };
 
     updateStickyNote = () => {
@@ -62,11 +65,12 @@ class StickyNote extends Component {
             zindex: this.state.zindex,
         };
         this.props.updateStickyNote(this.state.id, note);
+        //this.props.setQuery(uuidv4());
     }
 
     renderNote = () => {
         return (
-            <div key={this.state.id} className="note" style={{ zIndex: '100' }}>
+            <div className="note" style={{ zIndex: '100' }}>
                 <div className="handle" style={{ justifyContent: 'flex-start' }}>
                     <TiDeleteOutline className="delete" onClick={this.deleteStickyNote}/>
                 </div>

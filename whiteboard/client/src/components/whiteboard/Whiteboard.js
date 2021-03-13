@@ -3,24 +3,23 @@ import { useHistory } from "react-router-dom";
 import { FaUndoAlt, FaEraser, FaStickyNote } from 'react-icons/fa';
 import queryString from 'query-string';
 import StickyNote from '../Stickynote/Stickynote';
-
-
 import './whiteboard.css';
 
 const { connectDL2, disconnectDL2 } = require('protocol');
-const { getUserid } = require("protocol/layer2/stateManageLayer.js");
+//const { getUserid } = require("protocol/layer2/stateManageLayer.js");
 const { initCanvasG } = require("../../gui-config.js")
 const { getStickyNotes } = require("../../../protocol/layer2/stateManageLayer");
-const { deleteStickyNote, updateStickyNote } = require("../../gui-stickynote");
+const { deleteStickyNoteDG, updateStickyNoteDG } = require("../../gui-stickynote");
+const { v4: uuidv4 } = require('uuid');
 
 let Socket;
-let userid;
+//let userid;
 
 const Whiteboard = ({ location }) => {
     const [users, setUsers] = useState([]);
     const [message, setMessage] = useState([]);
     const [stickyNotes, setstickyNotes] = useState([]);
-    const [query, setQuery] = useState();
+    const [query, setQuery] = useState('');
     const history = useHistory();
 
     useEffect(() => {
@@ -43,12 +42,16 @@ const Whiteboard = ({ location }) => {
         Socket.on("roomData", ({ users }) => {
             setUsers(users);
         });
+
+        Socket.on('stickynote', () => {
+            setQuery(uuidv4());
+        });
     }, [message, users]);
 
     const getstickyNotes = (event) => {
         event.preventDefault();
         setstickyNotes(getStickyNotes());
-        setQuery(Math.random());
+        setQuery(uuidv4());
     };
 
 
@@ -92,25 +95,13 @@ const Whiteboard = ({ location }) => {
                     <FaStickyNote size={30} onClick={(event) => getstickyNotes(event)}/>
                 </div>
             </div>
-            {stickyNotes.map(note => 
-                <StickyNote key={note.id} note={note} id={note.id} onDrag={updateStickyNote} deleteStickyNote={deleteStickyNote} 
-                    updateStickyNote={updateStickyNote} setQuery={setQuery}/>
+            {stickyNotes.map(note => {
+                return <StickyNote key={uuidv4()} note={note} id={note.id} onDrag={updateStickyNoteDG} deleteStickyNote={deleteStickyNoteDG}
+                    updateStickyNote={updateStickyNoteDG} setQuery={setQuery} />
+            }
             )}
 
             <script src="/socket.io/socket.io.js"></script>
-            <script>
-                {
-                    window.onload = () => {
-                        setTimeout(() => {
-                            getUserid().then(returnedUserid => {
-                                userid = returnedUserid;
-                                console.log(userid);
-                                //drawLineDL2(userid);
-                            });
-                        }, 1000);
-                    }
-                }
-            </script>
         </div>
     )
 }
