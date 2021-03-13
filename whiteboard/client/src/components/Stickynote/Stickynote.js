@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Draggable from 'react-draggable';
 import TextareaAutosize from 'react-textarea-autosize';
-import { TiDeleteOutline } from 'react-icons/ti';
+import { TiDeleteOutline,TiDelete } from 'react-icons/ti';
 
 import './Stickynote.css';
 

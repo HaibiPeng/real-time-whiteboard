@@ -31,6 +31,7 @@ const addStickyNoteUG = (msgL2) => {
     };
 
     storeAddStickyNotesL2(note);
+    // protocol.addStickyNoteDL2(note.id, note.x, note.y, 50, 50, note.text, note.zindex);
 };
 
 const deleteStickyNote = (id) => {
