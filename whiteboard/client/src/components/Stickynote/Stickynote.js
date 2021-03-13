@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import Draggable from 'react-draggable';
 import TextareaAutosize from 'react-textarea-autosize';
+<<<<<<< HEAD
 import { TiDeleteOutline } from 'react-icons/ti';
+=======
+import { TiDeleteOutline,TiDelete } from 'react-icons/ti';
+
+>>>>>>> 385f3b049286aa33c9a1df8095db21050bdf060b
 import './Stickynote.css';
 
 const { v4: uuidv4 } = require('uuid');
