@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import Draggable from 'react-draggable';
 import TextareaAutosize from 'react-textarea-autosize';
-<<<<<<< HEAD
 import { TiDeleteOutline } from 'react-icons/ti';
-=======
-import { TiDeleteOutline,TiDelete } from 'react-icons/ti';
-
->>>>>>> 385f3b049286aa33c9a1df8095db21050bdf060b
 import './Stickynote.css';
 
 const { v4: uuidv4 } = require('uuid');
@@ -14,7 +9,6 @@ const { v4: uuidv4 } = require('uuid');
 class StickyNote extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             id: this.props.id,
             text: this.props.note.text,
@@ -41,19 +35,17 @@ class StickyNote extends Component {
 
     onStopDrag = (e, ui) => {
         this.setState({
-            text: this.state.text,
             x: ui.x,
             y: ui.y,
-            currIndex: this.zindex,
+            currIndex: this.state.zindex,
         });
-        //this.props.setQuery(uuidv4());
     }
 
     onContentChange = (event) => {
         this.setState({
             text: event.target.value,
         });
-        this.updateStickyNote();
+        //this.updateStickyNote();
         //this.props.setQuery(uuidv4());
     };
 
@@ -62,13 +54,16 @@ class StickyNote extends Component {
         this.props.setQuery(uuidv4());
     };
 
-    updateStickyNote = () => {
+    updateStickyNote = (event) => {
+        this.setState({
+            text: event.target.value,
+        });
         const note = {
-            text: this.state.text,
+            text: event.target.value,
             x: this.state.x,
             y: this.state.y,
             zindex: this.state.zindex,
-        };
+        }
         this.props.updateStickyNote(this.state.id, note);
         //this.props.setQuery(uuidv4());
     }
@@ -79,7 +74,7 @@ class StickyNote extends Component {
                 <div className="handle" style={{ justifyContent: 'flex-start' }}>
                     <TiDeleteOutline className="delete" onClick={this.deleteStickyNote}/>
                 </div>
-                <TextareaAutosize className="editing" onChange={this.onContentChange} value={this.state.text} />
+                <TextareaAutosize className="editing" onChange={this.updateStickyNote} value={this.state.text} onClick={this.updateStickyNote}/>
             </div>
 
         );

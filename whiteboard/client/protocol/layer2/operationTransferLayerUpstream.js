@@ -123,7 +123,6 @@ const recvUL2 = (msgL2) => {
                     deleteStickyNoteUL2(msgL2);
                     break;
                 case 'update':
-                    console.log('updating');
                     updateStickyNoteUL2(msgL2);
                     break;
                 default:
