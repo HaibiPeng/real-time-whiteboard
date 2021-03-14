@@ -15,11 +15,9 @@ const addStickyNoteDG = () => {
         id: uuidv4(),
         x: Math.floor(Math.random() * 500),
         y: Math.floor(Math.random() * 400 + 80),
-        text: 'Click here to start editing!',
+        text: '',
         zindex: 0,
     };
-
-    console.log(1);
     storeAddStickyNotesL2(note);
     protocol.addStickyNoteDL2(note.id, note.x, note.y, 50, 50, note.text, note.zindex);
 }

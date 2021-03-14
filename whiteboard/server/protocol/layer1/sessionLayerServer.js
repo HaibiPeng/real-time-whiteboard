@@ -5,6 +5,7 @@
 const { getMsgL1Template, TYPES_L1 } = require("../../../../PDU/layer1/msgDefL1.js");
 const { TYPES_L2 } = require("../../../../PDU/layer2/msgDefL2.js");
 const { getUser, addUser, removeUser, getUsersInRoom } = require('./users.js');
+const { v4: uuidv4 } = require('uuid');
 
 //let lineHist = [];
 
@@ -41,7 +42,7 @@ const connectHandler = (socket, io, msgL1) => {
 
         const msgL1 = getMsgL1Template(TYPES_L1.CONNECT);
         //msgL1.head.userid = nextUserId;
-        msgL1.head.userid = generateUniqueId();
+        msgL1.head.userid = uuidv4();
 
         //nextUserId += 1;
         currNumClients = users.length;
@@ -106,6 +107,9 @@ const editionHandler = (socket, io, msgL1) => {
                 socket.broadcast.send(msgL1);
                 socket.broadcast.emit('stickynote');
                 break;
+            case TYPES_L2.ADDIMAGE:
+                socket.broadcast.send(msgL1);
+                break;
         }
     }
 };
@@ -134,18 +138,6 @@ const recvMsg = (socket, io) => {
     });
 };
 
-function generateUniqueId() {
-    const strong = 65535;
-    return (
-        new Date().getTime().toString(16) +
-        "-" +
-        Math.floor(strong * Math.random()).toString(16) +
-        "-" +
-        Math.floor(strong * Math.random()).toString(16) +
-        "-" +
-        Math.floor(strong * Math.random()).toString(16)
-    );
-}
 
 module.exports = {
     setPwd,

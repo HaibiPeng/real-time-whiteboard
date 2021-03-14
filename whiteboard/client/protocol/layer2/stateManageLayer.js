@@ -62,7 +62,7 @@ function unDoDrawLineToDecreasePointer() {
 
 const storeAddStickyNotesL2 = (note) => {
     stickyNotes.push(note);
-    // console.log(stickyNotes);
+    console.log(stickyNotes.length);
 };
 
 const deleteStickyNoteL2 = (id) => {
@@ -71,9 +71,9 @@ const deleteStickyNoteL2 = (id) => {
 };
 
 const updateStickyNoteL2 = (id, note) => {
-    console.log(note.text);
-    const updatedNote = stickyNotes.findIndex(Note => Note.id === id);
+    let updatedNote = stickyNotes.findIndex(Note => Note.id === id);
     stickyNotes[updatedNote] = note;
+    console.log(stickyNotes.length);
 }
 
 const getStickyNotes = () => {

@@ -11,6 +11,7 @@
  */
 const { drawLineUG } = require('../../src/gui-draw.js');
 const { addStickyNoteUG, deleteStickyNoteUG, updateStickyNoteUG } = require('../../src/gui-stickynote.js');
+const { addImageUG } = require('../../src/gui-image.js');
 const { TYPES_L2 } = require("../../../../PDU/layer2/msgDefL2.js");
 // const { storeDrawLinesL2, storeAddStickyNotesL2, storeAddImagesL2 } = require("./stateManageLayer.js");
 //const { recvUL1 } = require('../layer1/sessionLayerClient.js');
@@ -94,7 +95,8 @@ const addImageUL2 = (msgL2) => {
     // TODO: store the edition
     // TODO: invoke functions form GUI to display the edition
     // storeAddImagesL2(msgL2);
-    //addImageG(msgL2);
+    console.log(msgL2.payload.loc);
+    addImageUG(msgL2);
 };
 
 // TODO: other edition-related functions

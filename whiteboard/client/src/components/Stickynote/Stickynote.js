@@ -17,6 +17,7 @@ class StickyNote extends Component {
             zindex: this.props.note.zindex,
             currIndex: this.props.note.zindex,
         };
+        //console.log(this.props.note.text);
     }
 
     onDrag = (e, ui) => {
@@ -45,7 +46,7 @@ class StickyNote extends Component {
         this.setState({
             text: event.target.value,
         });
-        //this.updateStickyNote();
+        this.updateStickyNote(event);
         //this.props.setQuery(uuidv4());
     };
 
@@ -55,9 +56,10 @@ class StickyNote extends Component {
     };
 
     updateStickyNote = (event) => {
-        this.setState({
-            text: event.target.value,
-        });
+        // this.setState({
+        //     text: event.target.value,
+        // });
+        //this.setState(this.initialState);
         const note = {
             text: event.target.value,
             x: this.state.x,
@@ -65,6 +67,7 @@ class StickyNote extends Component {
             zindex: this.state.zindex,
         }
         this.props.updateStickyNote(this.state.id, note);
+        console.log(this.state.text);
         //this.props.setQuery(uuidv4());
     }
 
@@ -74,7 +77,7 @@ class StickyNote extends Component {
                 <div className="handle" style={{ justifyContent: 'flex-start' }}>
                     <TiDeleteOutline className="delete" onClick={this.deleteStickyNote}/>
                 </div>
-                <TextareaAutosize className="editing" onChange={this.updateStickyNote} value={this.state.text} onClick={this.updateStickyNote}/>
+                <TextareaAutosize className="editing" onChange={this.onContentChange} value={this.state.text} />
             </div>
 
         );

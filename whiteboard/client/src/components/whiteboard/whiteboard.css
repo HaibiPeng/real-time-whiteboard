@@ -46,8 +46,14 @@ html, body {
 .color.blue { background-color: blue; }
 .color.yellow { background-color: yellow; }
 
-#undo, #erase, #stickynote{
+#undo, #erase, #stickynote, #image{
   display: inline-block;
   border: 5px solid hsl(0, 0%, 100%);
+}
+
+.image-upload > input {
+  visibility:hidden;
+  width:0;
+  height:0
 }
 

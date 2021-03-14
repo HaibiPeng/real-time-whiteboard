@@ -85,16 +85,14 @@ const updateStickyNoteDL2 = (id, note) => {
     sendDL2(msgL2);
 }
 
-const addImageDL2 = (x, y, w, h, gray, bytes) => {
+const addImageDL2 = (x, y, w, h, bytes) => {
     const msgL2 = getMsgL2Template(TYPES_L2.ADDIMAGE);
-    msgL2.head.userid = getUserid();
     msgL2.payload.loc.x = x;
     msgL2.payload.loc.y = y;
     msgL2.payload.loc.w = w;
     msgL2.payload.loc.h = h;
-    msgL2.payload.gray = gray;
     msgL2.payload.bytes = bytes;
-    storeAddImagesL2(msgL2);
+    //storeAddImagesL2(msgL2);
     sendDL2(msgL2);
 };
 

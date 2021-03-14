@@ -6,6 +6,7 @@
 const { v4: uuidv4 } = require('uuid');
 const { drawLineDG } = require('./gui-draw.js');
 const { addStickyNoteDG } = require('./gui-stickynote.js');
+const { addImageDG } = require('./gui-image.js');
 const { DrawLineContext } = require('./gui-state.js');
 const protocol  = require("protocol");
 const { onUnDo } = require('./gui-undo.js');
@@ -115,6 +116,7 @@ const initCanvasG = () => {
     var eraseIcon = document.getElementById('erase');
     var undoIcon = document.getElementById('undo');
     var stickynoteIcon = document.getElementById('stickynote');
+    var imageIcon = document.getElementById('image');
 
     eraseIcon.addEventListener('click', function () {
         DrawLineContext.color = 'white';
@@ -126,6 +128,10 @@ const initCanvasG = () => {
 
     stickynoteIcon.addEventListener('click', function () {
         addStickyNoteDG();
+    });
+
+    imageIcon.addEventListener('change', function (event) {
+        addImageDG(event);
     });
 
     window.addEventListener("keydown", (event) => {

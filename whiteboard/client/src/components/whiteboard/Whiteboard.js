@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
-import { FaUndoAlt, FaEraser, FaStickyNote } from 'react-icons/fa';
+import { FaUndoAlt, FaEraser, FaStickyNote, FaImage } from 'react-icons/fa';
 import queryString from 'query-string';
 import StickyNote from '../Stickynote/Stickynote';
 import './whiteboard.css';
@@ -80,7 +80,7 @@ const Whiteboard = ({ location }) => {
             )}
             </div> */}
 
-            <canvas id="canvas" className="whiteboard" width="100" height="100"></canvas>            
+            <canvas id="canvas" className="whiteboard" width="200" height="200"></canvas>            
             <div className="colors">
                 <div className="color black"></div>
                 <div className="color red"></div>
@@ -94,13 +94,19 @@ const Whiteboard = ({ location }) => {
                 <div id="stickynote">
                     <FaStickyNote size={30} onClick={(event) => getstickyNotes(event)}/>
                 </div>
+                <div id='image'>
+                    <label className="image-upload">
+                        <FaImage size={32} />
+                        <input type="file" accept="image/*" />
+                    </label>
+                </div>
             </div>
+            <canvas id="imgCanvas" width="1000" height="700"></canvas>
             {stickyNotes.map(note => {
                 return <StickyNote key={uuidv4()} note={note} id={note.id} onDrag={updateStickyNoteDG} deleteStickyNote={deleteStickyNoteDG}
                     updateStickyNote={updateStickyNoteDG} setQuery={setQuery} />
             }
             )}
-
             <script src="/socket.io/socket.io.js"></script>
         </div>
     )
