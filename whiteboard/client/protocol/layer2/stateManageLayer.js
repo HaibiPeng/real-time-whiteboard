@@ -73,7 +73,6 @@ const deleteStickyNoteL2 = (id) => {
 const updateStickyNoteL2 = (id, note) => {
     let updatedNote = stickyNotes.findIndex(Note => Note.id === id);
     stickyNotes[updatedNote] = note;
-    console.log(stickyNotes.length);
 }
 
 const getStickyNotes = () => {

@@ -1,0 +1,85 @@
+Date : 2021-03-15 21:43:12
+Directory : /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard
+Total : 40 files,  36084 codes, 282 comments, 300 blanks, all 36666 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JSON       |          8 |     34,745 |          0 |          8 |     34,753 |
+| JavaScript |         25 |      1,131 |        279 |        226 |      1,636 |
+| CSS        |          3 |        141 |          3 |         26 |        170 |
+| Markdown   |          3 |         57 |          0 |         39 |         96 |
+| HTML       |          1 |         10 |          0 |          1 |         11 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                                    | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                       |         40 |     36,084 |        282 |        300 |     36,666 |
+| PDU                                                                                                                                     |          3 |        149 |         10 |         14 |        173 |
+| PDU/layer1                                                                                                                              |          1 |         49 |          5 |          6 |         60 |
+| PDU/layer2                                                                                                                              |          1 |         94 |          3 |          7 |        104 |
+| whiteboard                                                                                                                              |         33 |     35,673 |        272 |        278 |     36,223 |
+| whiteboard/client                                                                                                                       |         28 |     32,181 |        236 |        240 |     32,657 |
+| whiteboard/client/protocol                                                                                                              |          7 |        299 |        126 |         65 |        490 |
+| whiteboard/client/protocol/layer1                                                                                                       |          1 |         62 |         35 |         14 |        111 |
+| whiteboard/client/protocol/layer2                                                                                                       |          3 |        205 |         90 |         47 |        342 |
+| whiteboard/client/public                                                                                                                |          1 |         10 |          0 |          1 |         11 |
+| whiteboard/client/src                                                                                                                   |         15 |        666 |         99 |        132 |        897 |
+| whiteboard/client/src/components                                                                                                        |          6 |        329 |         39 |         63 |        431 |
+| whiteboard/client/src/components/Join                                                                                                   |          2 |         87 |          3 |         16 |        106 |
+| whiteboard/client/src/components/Stickynote                                                                                             |          2 |        123 |          8 |         19 |        150 |
+| whiteboard/client/src/components/whiteboard                                                                                             |          2 |        119 |         28 |         28 |        175 |
+| whiteboard/server                                                                                                                       |          5 |      3,492 |         36 |         38 |      3,566 |
+| whiteboard/server/protocol                                                                                                              |          2 |        124 |         26 |         24 |        174 |
+| whiteboard/server/protocol/layer1                                                                                                       |          2 |        124 |         26 |         24 |        174 |
++-----------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                                                | language   | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/PDU/layer1/msgDefL1.js                                                | JavaScript |         49 |          5 |          6 |         60 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/PDU/layer2/msgDefL2.js                                                | JavaScript |         94 |          3 |          7 |        104 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/PDU/msgDefGeneral.js                                                  | JavaScript |          6 |          2 |          1 |          9 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/package-lock.json                                                     | JSON       |        226 |          0 |          1 |        227 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/package.json                                                          | JSON       |         17 |          0 |          1 |         18 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/protocol-description.md                                               | Markdown   |         16 |          0 |          4 |         20 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/todo-list.md                                                          | Markdown   |          3 |          0 |          2 |          5 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/README.md                                           | Markdown   |         38 |          0 |         33 |         71 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/config-overrides.js                                 | JavaScript |         12 |          0 |          3 |         15 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/package-lock.json                                   | JSON       |     31,091 |          0 |          1 |     31,092 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/package.json                                        | JSON       |         55 |          0 |          1 |         56 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/protocol/index.js                                   | JavaScript |          9 |          1 |          2 |         12 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/protocol/layer1/sessionLayerClient.js               | JavaScript |         62 |         35 |         14 |        111 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/protocol/layer2/operationTransferLayerDownstream.js | JavaScript |         75 |         19 |         13 |        107 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/protocol/layer2/operationTransferLayerUpstream.js   | JavaScript |         76 |         57 |         12 |        145 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/protocol/layer2/stateManageLayer.js                 | JavaScript |         54 |         14 |         22 |         90 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/protocol/package-lock.json                          | JSON       |         12 |          0 |          1 |         13 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/protocol/package.json                               | JSON       |         11 |          0 |          1 |         12 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/public/index.html                                   | HTML       |         10 |          0 |          1 |         11 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/src/App.js                                          | JavaScript |         13 |          0 |          2 |         15 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/src/components/Join/Join.css                        | CSS        |         59 |          0 |         12 |         71 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/src/components/Join/Join.js                         | JavaScript |         28 |          3 |          4 |         35 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/src/components/Stickynote/Stickynote.css            | CSS        |         36 |          0 |          3 |         39 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/src/components/Stickynote/Stickynote.js             | JavaScript |         87 |          8 |         16 |        111 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/src/components/whiteboard/Whiteboard.js             | JavaScript |         73 |         25 |         17 |        115 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/src/components/whiteboard/whiteboard.css            | CSS        |         46 |          3 |         11 |         60 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/src/gui-config.js                                   | JavaScript |        124 |         22 |         23 |        169 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/src/gui-draw.js                                     | JavaScript |         42 |         14 |          9 |         65 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/src/gui-image.js                                    | JavaScript |         54 |          3 |          5 |         62 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/src/gui-state.js                                    | JavaScript |         25 |          2 |          7 |         34 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/src/gui-stickynote.js                               | JavaScript |         42 |          6 |         13 |         61 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/src/gui-undo.js                                     | JavaScript |         28 |          4 |          3 |         35 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/src/gui.js                                          | JavaScript |          2 |          9 |          4 |         15 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/src/index.js                                        | JavaScript |          7 |          0 |          3 |         10 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/client/start-client.js                                     | JavaScript |         10 |         11 |          4 |         25 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/server/package-lock.json                                   | JSON       |      3,310 |          0 |          1 |      3,311 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/server/package.json                                        | JSON       |         23 |          0 |          1 |         24 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/server/protocol/layer1/sessionLayerServer.js               | JavaScript |        104 |         26 |         15 |        145 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/server/protocol/layer1/users.js                            | JavaScript |         20 |          0 |          9 |         29 |
+| /Users/jdszsl/Desktop/projects/phb-2021-3-12/real-time-whiteboard/whiteboard/server/server-start.js                                     | JavaScript |         35 |         10 |         12 |         57 |
+| Total                                                                                                                                   |            |     36,084 |        282 |        300 |     36,666 |
++-----------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

@@ -14,6 +14,7 @@ const { getUserid } = require("./stateManageLayer.js");
 const { storeDrawLinesL2, storeAddStickyNotesL2, storeAddImagesL2 } = require("./stateManageLayer.js");
 const assert = require("assert");
 const { connectDL1, disconnectDL1, sendDL1 } = require('../layer1/sessionLayerClient.js');
+const CryptoJS = require("crypto-js");
 
 const connectDL2 = (password, history) => {
     return connectDL1(password, history);
@@ -81,7 +82,8 @@ const updateStickyNoteDL2 = (id, note) => {
     msgL2.payload.loc.w = note.w;
     msgL2.payload.loc.h = note.h;
     msgL2.payload.loc.zindex = note.zindex;
-    msgL2.payload.text = note.text;
+    msgL2.payload.text = CryptoJS.AES.encrypt(note.text, 'secret key 123').toString();
+    console.log(msgL2.payload.text);
     sendDL2(msgL2);
 }
 
@@ -91,8 +93,10 @@ const addImageDL2 = (x, y, w, h, bytes) => {
     msgL2.payload.loc.y = y;
     msgL2.payload.loc.w = w;
     msgL2.payload.loc.h = h;
-    msgL2.payload.bytes = bytes;
+    msgL2.payload.bytes = CryptoJS.AES.encrypt(bytes, 'secret key 123').toString();
     //storeAddImagesL2(msgL2);
+    console.log(bytes);
+    console.log(msgL2.payload.bytes);
     sendDL2(msgL2);
 };
 

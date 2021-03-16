@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
-import { FaUndoAlt, FaEraser, FaStickyNote, FaImage } from 'react-icons/fa';
+import { FaUndoAlt, FaEraser, FaStickyNote, FaImage, FaSave } from 'react-icons/fa';
 import queryString from 'query-string';
 import StickyNote from '../Stickynote/Stickynote';
 import './whiteboard.css';
@@ -80,7 +80,8 @@ const Whiteboard = ({ location }) => {
             )}
             </div> */}
 
-            <canvas id="canvas" className="whiteboard" width="200" height="200"></canvas>            
+            
+            <canvas id="canvas" className="whiteboard" width="1200" height="1200"></canvas>   
             <div className="colors">
                 <div className="color black"></div>
                 <div className="color red"></div>
@@ -100,13 +101,16 @@ const Whiteboard = ({ location }) => {
                         <input type="file" accept="image/*" />
                     </label>
                 </div>
+                <div id='save'>
+                    <FaSave size={32} />
+                </div>
             </div>
-            <canvas id="imgCanvas" width="1000" height="700"></canvas>
             {stickyNotes.map(note => {
                 return <StickyNote key={uuidv4()} note={note} id={note.id} onDrag={updateStickyNoteDG} deleteStickyNote={deleteStickyNoteDG}
                     updateStickyNote={updateStickyNoteDG} setQuery={setQuery} />
             }
             )}
+            {/* <canvas id="imgCanvas" width="1000" height="700"></canvas> */}
             <script src="/socket.io/socket.io.js"></script>
         </div>
     )

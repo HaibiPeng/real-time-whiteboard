@@ -34,7 +34,7 @@ const addImageDG = (event) => {
             image.src = e.target.result;
             //console.log(e.target.result);
             image.onload = function () {
-                var imageCanvas = document.getElementById('imgCanvas');
+                var imageCanvas = document.getElementById('canvas');
                 var context = imageCanvas.getContext('2d');
                 const { width, height } = resizeImg(image);
                 const canvasWidth = getCanvasSizeG().width;
@@ -51,7 +51,7 @@ const addImageUG = (msgL2) => {
     var image = new Image();
     image.src = msgL2.payload.bytes;
     image.onload = function () {
-        var imageCanvas = document.getElementById('imgCanvas');
+        var imageCanvas = document.getElementById('canvas');
         var context = imageCanvas.getContext('2d');
         const canvasWidth = getCanvasSizeG().width;
         const canvasHeight = getCanvasSizeG().height;

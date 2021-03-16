@@ -46,7 +46,7 @@ html, body {
 .color.blue { background-color: blue; }
 .color.yellow { background-color: yellow; }
 
-#undo, #erase, #stickynote, #image{
+#undo, #erase, #stickynote, #image, #save{
   display: inline-block;
   border: 5px solid hsl(0, 0%, 100%);
 }

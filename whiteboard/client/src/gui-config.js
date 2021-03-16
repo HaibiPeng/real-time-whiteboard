@@ -3,6 +3,7 @@
  * Function to initialize gui is here!
  */
 
+const { saveAs } = require('file-saver');
 const { v4: uuidv4 } = require('uuid');
 const { drawLineDG } = require('./gui-draw.js');
 const { addStickyNoteDG } = require('./gui-stickynote.js');
@@ -11,6 +12,7 @@ const { DrawLineContext } = require('./gui-state.js');
 const protocol  = require("protocol");
 const { onUnDo } = require('./gui-undo.js');
 const { getDrawLinePointer, drawLineAction, getCurAction, unDoDrawLineToDecreasePointer } = require('../protocol/layer2/stateManageLayer');
+var domtoimage = require('dom-to-image');
 
 function onMouseDown(e) {
     DrawLineContext.drawing = true;
@@ -111,12 +113,24 @@ function onResize() {
     DrawLineContext.canvas.height = window.innerHeight;
 }
 
+const savePageAsImage = () => {
+    var page = document.getElementById('root');
+    domtoimage.toBlob(page)
+        .then(function (blob) {
+            saveAs(blob, 'whiteboard.jpg');
+        });
+    // page.toBlob(function (blob) {
+    //     saveAs(blob, "whiteboard.png");
+    // });
+}
+
 const initCanvasG = () => {
     var colors = document.getElementsByClassName('color');
     var eraseIcon = document.getElementById('erase');
     var undoIcon = document.getElementById('undo');
     var stickynoteIcon = document.getElementById('stickynote');
     var imageIcon = document.getElementById('image');
+    var saveIcon = document.getElementById('save');
 
     eraseIcon.addEventListener('click', function () {
         DrawLineContext.color = 'white';
@@ -132,6 +146,10 @@ const initCanvasG = () => {
 
     imageIcon.addEventListener('change', function (event) {
         addImageDG(event);
+    });
+
+    saveIcon.addEventListener('click', function (event) {
+        savePageAsImage();
     });
 
     window.addEventListener("keydown", (event) => {
@@ -160,6 +178,10 @@ const initCanvasG = () => {
     window.addEventListener('resize', onResize, false);
 
     DrawLineContext.canvas = canvas;
+    var context = canvas.getContext("2d");
+    context.fillStyle = "white";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
     onResize();
     console.log("CANVAS INITILIZED!");
 };
