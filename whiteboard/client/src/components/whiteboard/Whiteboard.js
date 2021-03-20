@@ -5,12 +5,12 @@ import queryString from 'query-string';
 import StickyNote from '../Stickynote/Stickynote';
 import './whiteboard.css';
 
+const { v4: uuidv4 } = require('uuid');
 const { connectDL2, disconnectDL2 } = require('protocol');
 //const { getUserid } = require("protocol/layer2/stateManageLayer.js");
 const { initCanvasG } = require("../../gui-config.js")
 const { getStickyNotes } = require("../../../protocol/layer2/stateManageLayer");
 const { deleteStickyNoteDG, updateStickyNoteDG } = require("../../gui-stickynote");
-const { v4: uuidv4 } = require('uuid');
 
 let Socket;
 //let userid;
