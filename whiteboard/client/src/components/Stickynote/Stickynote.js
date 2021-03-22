@@ -25,13 +25,12 @@ class StickyNote extends Component {
             text: this.state.text,
             x: ui.x,
             y: ui.y,
-            zindex: this.state.zindex,
+            zindex: 500,
         };
         this.setState({
             currIndex: 500,
         });
         this.props.onDrag(this.state.id, note);
-        //this.props.setQuery(uuidv4());
     };
 
     onStopDrag = (e, ui) => {
@@ -40,6 +39,7 @@ class StickyNote extends Component {
             y: ui.y,
             currIndex: this.state.zindex,
         });
+        //this.props.setQuery(uuidv4());
     }
 
     onContentChange = (event) => {
@@ -56,18 +56,14 @@ class StickyNote extends Component {
     };
 
     updateStickyNote = (event) => {
-        // this.setState({
-        //     text: event.target.value,
-        // });
-        //this.setState(this.initialState);
         const note = {
             text: event.target.value,
             x: this.state.x,
             y: this.state.y,
-            zindex: this.state.zindex,
+            zindex: this.state.currIndex,
         }
         this.props.updateStickyNote(this.state.id, note);
-        console.log(this.state.text);
+        //console.log(this.state.text);
         //this.props.setQuery(uuidv4());
     }
 
@@ -99,6 +95,7 @@ class StickyNote extends Component {
                 onStop={this.onStopDrag}
                 onDrag={this.onDrag}
                 bounds="body"
+                zIndex={this.state.currIndex}
             >
                 {this.renderNote()}
             </Draggable>

@@ -114,7 +114,7 @@ function onResize() {
 }
 
 const savePageAsImage = () => {
-    var page = document.getElementById('root');
+    var page = document.getElementById('body');
     domtoimage.toBlob(page)
         .then(function (blob) {
             saveAs(blob, 'whiteboard.jpg');
@@ -178,9 +178,9 @@ const initCanvasG = () => {
     window.addEventListener('resize', onResize, false);
 
     DrawLineContext.canvas = canvas;
-    var context = canvas.getContext("2d");
-    context.fillStyle = "white";
-    context.fillRect(0, 0, canvas.width, canvas.height);
+    var context = DrawLineContext.canvas.getContext("2d");
+    context.fillStyle = "#FFFFFF";
+    context.fillRect(0, 0, DrawLineContext.canvas.width, DrawLineContext.canvas.height);
 
     onResize();
     console.log("CANVAS INITILIZED!");

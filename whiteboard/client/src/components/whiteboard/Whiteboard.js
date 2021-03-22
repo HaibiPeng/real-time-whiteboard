@@ -105,12 +105,13 @@ const Whiteboard = ({ location }) => {
                     <FaSave size={32} />
                 </div>
             </div>
+            
             {stickyNotes.map(note => {
                 return <StickyNote key={uuidv4()} note={note} id={note.id} onDrag={updateStickyNoteDG} deleteStickyNote={deleteStickyNoteDG}
                     updateStickyNote={updateStickyNoteDG} setQuery={setQuery} />
             }
             )}
-            {/* <canvas id="imgCanvas" width="1000" height="700"></canvas> */}
+            <canvas id="imgCanvas" width="1000" height="700"></canvas>
             <script src="/socket.io/socket.io.js"></script>
         </div>
     )

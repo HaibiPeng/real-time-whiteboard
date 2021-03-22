@@ -9,6 +9,7 @@
 /* The following functions invoke functions from GUI to display editions.
  * 'U' is the abbr of Up, which means that the data flow is from the lower layer to the higher layer.
  */
+const { getCanvasSizeG } = require('../../src/gui-state.js');
 const { drawLineUG } = require('../../src/gui-draw.js');
 const { addStickyNoteUG, deleteStickyNoteUG, updateStickyNoteUG } = require('../../src/gui-stickynote.js');
 const { addImageUG } = require('../../src/gui-image.js');
@@ -23,10 +24,6 @@ const drawLineUL2 = (msgL2) => {
     // TODO: handle (possible) conflicts
     // TODO: invoke functions form GUI to display the edition
     //storeDrawLinesL2(msgL2);
-    var canvas = document.getElementsByClassName('whiteboard')[0];
-    var context = canvas.getContext('2d');
-    var w = canvas.width;
-    var h = canvas.height;
     drawLineUG(
         msgL2.payload.loc.x0,
         msgL2.payload.loc.y0,
@@ -82,10 +79,12 @@ const deleteStickyNoteUL2 = (msgL2) => {
 }
 
 const updateStickyNoteUL2 = (msgL2) => {
+    const canvasWidth = getCanvasSizeG().width;
+    const canvasHeight = getCanvasSizeG().height;
     const note = {
         id: msgL2.payload.id,
-        x: msgL2.payload.loc.x,
-        y: msgL2.payload.loc.y,
+        x: msgL2.payload.loc.x * canvasWidth,
+        y: msgL2.payload.loc.y * canvasHeight,
         //text: msgL2.payload.text,
         text: CryptoJS.AES.decrypt(msgL2.payload.text, 'secret key 123').toString(CryptoJS.enc.Utf8),
         zindex: msgL2.payload.loc.zindex,

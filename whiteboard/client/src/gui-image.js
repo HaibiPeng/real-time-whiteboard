@@ -1,4 +1,4 @@
-const { DrawLineContext, getCanvasSizeG } = require('./gui-state.js');
+const { getCanvasSizeG } = require('./gui-state.js');
 const protocol = require("protocol");
 
 const resizeImg = (image) => {
@@ -34,14 +34,14 @@ const addImageDG = (event) => {
             image.src = e.target.result;
             //console.log(e.target.result);
             image.onload = function () {
-                var imageCanvas = document.getElementById('canvas');
+                var imageCanvas = document.getElementById('imgCanvas');
                 var context = imageCanvas.getContext('2d');
                 const { width, height } = resizeImg(image);
                 const canvasWidth = getCanvasSizeG().width;
                 const canvasHeight = getCanvasSizeG().height;
                 context.drawImage(image, x, y, width, height);
                 //let imgData = imageCanvas.toDataURL("image/jpeg");
-                protocol.addImageDL2(x / canvasWidth, y / canvasHeight, width, height, e.target.result);
+                protocol.addImageDL2(x / canvasWidth, y / canvasHeight, width / canvasWidth, height / canvasHeight, e.target.result);
             } 
         }
     }
@@ -51,11 +51,12 @@ const addImageUG = (msgL2) => {
     var image = new Image();
     image.src = msgL2.payload.bytes;
     image.onload = function () {
-        var imageCanvas = document.getElementById('canvas');
+        var imageCanvas = document.getElementById('imgCanvas');
         var context = imageCanvas.getContext('2d');
         const canvasWidth = getCanvasSizeG().width;
         const canvasHeight = getCanvasSizeG().height;
-        context.drawImage(image, msgL2.payload.loc.x * canvasWidth, msgL2.payload.loc.y * canvasHeight, msgL2.payload.loc.w, msgL2.payload.loc.h);
+        context.drawImage(image, msgL2.payload.loc.x * canvasWidth, msgL2.payload.loc.y * canvasHeight, 
+            msgL2.payload.loc.w * canvasWidth, msgL2.payload.loc.h * canvasHeight);
     }
 }
 

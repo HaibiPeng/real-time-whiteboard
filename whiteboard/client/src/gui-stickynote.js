@@ -4,6 +4,7 @@
 //const { deleteStickyNoteDL2 } = require('../protocol/layer2/operationTransferLayerDownstream');
 const { v4: uuidv4 } = require('uuid');
 const { storeAddStickyNotesL2, deleteStickyNoteL2, updateStickyNoteL2 } = require('../protocol/layer2/stateManageLayer');
+const { getCanvasSizeG } = require('./gui-state.js');
 
 // eslint-disable-next-line
 const protocol = require("protocol");
@@ -18,15 +19,19 @@ const addStickyNoteDG = () => {
         text: '',
         zindex: 0,
     };
+    const canvasWidth = getCanvasSizeG().width;
+    const canvasHeight = getCanvasSizeG().height;
     storeAddStickyNotesL2(note);
-    protocol.addStickyNoteDL2(note.id, note.x, note.y, 50, 50, note.text, note.zindex);
+    protocol.addStickyNoteDL2(note.id, note.x / canvasWidth, note.y / canvasHeight, 50, 50, note.text, note.zindex);
 }
 
 const addStickyNoteUG = (msgL2) => {
+    const canvasWidth = getCanvasSizeG().width;
+    const canvasHeight = getCanvasSizeG().height;
     note = {
         id: msgL2.payload.id,
-        x: msgL2.payload.loc.x,
-        y: msgL2.payload.loc.y,
+        x: msgL2.payload.loc.x * canvasWidth,
+        y: msgL2.payload.loc.y * canvasHeight,
         text: msgL2.payload.text,
         zindex: msgL2.payload.loc.zindex,
     };

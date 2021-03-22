@@ -9,9 +9,9 @@
 /* The following functions will be invoked by GUI.
  * 'D' is the abbr of Down, which means that the data flow is from the higher layer to the lower layer.
  */
+const { getCanvasSizeG } = require('../../src/gui-state.js');
 const { getMsgL2Template, TYPES_L2 } = require("../../../../PDU/layer2/msgDefL2.js");
 const { getUserid } = require("./stateManageLayer.js");
-const { storeDrawLinesL2, storeAddStickyNotesL2, storeAddImagesL2 } = require("./stateManageLayer.js");
 const assert = require("assert");
 const { connectDL1, disconnectDL1, sendDL1 } = require('../layer1/sessionLayerClient.js');
 const CryptoJS = require("crypto-js");
@@ -75,12 +75,14 @@ const deleteStickyNoteDL2 = (id) => {
 const updateStickyNoteDL2 = (id, note) => {
     const msgL2 = getMsgL2Template(TYPES_L2.STICKYNOTE);
     //msgL2.head.userid = getUserid();
+    const canvasWidth = getCanvasSizeG().width;
+    const canvasHeight = getCanvasSizeG().height;
     msgL2.payload.id = id;
     msgL2.payload.actiontype = 'update';
-    msgL2.payload.loc.x = note.x;
-    msgL2.payload.loc.y = note.y;
-    msgL2.payload.loc.w = note.w;
-    msgL2.payload.loc.h = note.h;
+    msgL2.payload.loc.x = note.x / canvasWidth;
+    msgL2.payload.loc.y = note.y / canvasHeight;
+    msgL2.payload.loc.w = note.w / canvasWidth;
+    msgL2.payload.loc.h = note.h / canvasHeight;
     msgL2.payload.loc.zindex = note.zindex;
     msgL2.payload.text = CryptoJS.AES.encrypt(note.text, 'secret key 123').toString();
     console.log(msgL2.payload.text);
