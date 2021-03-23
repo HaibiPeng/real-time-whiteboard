@@ -1,5 +1,7 @@
-# real-time-whiteboard(currently still under development)
-course assignment for ELEC-E7320 - Internet Protocols
+# real-time-whiteboard
+Course assignment for ELEC-E7320 - Internet Protocols
+
+#Option 2 by Group X
 
 # How to run the app
 Run these commands in terminal:
